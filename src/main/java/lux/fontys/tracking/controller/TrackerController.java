@@ -1,15 +1,13 @@
 package lux.fontys.tracking.controller;
 
-import lux.fontys.tracking.dto.TrackerDto;
-import lux.fontys.tracking.mapper.TrackerMapper;
+import lux.fontys.tracking.facade.TrackerFacade;
 import lux.fontys.tracking.model.Tracker;
-import lux.fontys.tracking.repository.TrackerRepository;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
-import java.util.List;
+import java.util.UUID;
 
 @Path("/trackers")
 @Produces("application/json")
@@ -17,25 +15,23 @@ import java.util.List;
 public class TrackerController {
 
     @Inject
-    TrackerRepository trackerRepository;
+    TrackerFacade trackerFacade;
 
     @GET
     @Transactional
     public Response index() {
-        List<Tracker> trackers = trackerRepository.findAll();
-        List<TrackerDto> trackerDtos = TrackerMapper.INSTANCE.trackersToTrackerDtos(trackers);
-        return Response.ok(trackerDtos).build();
+        return Response.ok(trackerFacade.findAll()).build();
     }
 
     @GET
     @Path("{id}")
-    public Response show(@PathParam("id") Long id) {
-        return Response.ok(trackerRepository.findById(id)).build();
+    public Response show(@PathParam("id") UUID id) {
+        return Response.ok(trackerFacade.findById(id)).build();
     }
 
     @POST
     public Response create(Tracker tracker) {
-        trackerRepository.save(tracker);
+        trackerFacade.save(tracker);
         return Response.status(Response.Status.CREATED).build();
     }
 }

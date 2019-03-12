@@ -80,3 +80,5 @@ modules.xml
 
 # End of https://www.gitignore.io/api/intellij+iml
 target
+*.war
+target/tracking/META-INF/MANIFEST.MF
