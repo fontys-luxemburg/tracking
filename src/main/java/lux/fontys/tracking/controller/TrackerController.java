@@ -1,11 +1,15 @@
 package lux.fontys.tracking.controller;
 
+import lux.fontys.tracking.dto.TrackerDto;
+import lux.fontys.tracking.mapper.TrackerMapper;
 import lux.fontys.tracking.model.Tracker;
 import lux.fontys.tracking.repository.TrackerRepository;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 @Path("/trackers")
 @Produces("application/json")
@@ -16,8 +20,11 @@ public class TrackerController {
     TrackerRepository trackerRepository;
 
     @GET
+    @Transactional
     public Response index() {
-        return Response.ok(trackerRepository.findAll()).build();
+        List<Tracker> trackers = trackerRepository.findAll();
+        List<TrackerDto> trackerDtos = TrackerMapper.INSTANCE.trackersToTrackerDtos(trackers);
+        return Response.ok(trackerDtos).build();
     }
 
     @GET
