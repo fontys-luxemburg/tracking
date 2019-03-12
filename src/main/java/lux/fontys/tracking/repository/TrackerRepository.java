@@ -23,8 +23,7 @@ public class TrackerRepository implements CrudRepository<Tracker, Long> {
 
     @Override
     public List<Tracker> findAll() {
-        Query query = em.createQuery("select t from Tracker t", Tracker.class);
-        return query.getResultList();
+        return em.createQuery("select t from Tracker t", Tracker.class).getResultList();
     }
 
     @Override
