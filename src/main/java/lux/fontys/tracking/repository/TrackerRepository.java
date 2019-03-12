@@ -9,15 +9,16 @@ import javax.persistence.Query;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @ApplicationScoped
-public class TrackerRepository implements CrudRepository<Tracker, Long> {
+public class TrackerRepository implements CrudRepository<Tracker, UUID> {
 
     @PersistenceContext
     private EntityManager em;
 
     @Override
-    public Optional<Tracker> findById(Long id) {
+    public Optional<Tracker> findById(UUID id) {
         return Optional.of(em.find(Tracker.class, id));
     }
 

@@ -7,16 +7,17 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @ApplicationScoped
-public class TrackerFacade implements BaseFacade<Tracker, Long> {
+public class TrackerFacade implements BaseFacade<Tracker, UUID> {
 
 	@Inject
 	TrackerRepository trackerRepository;
 
 
 	@Override
-	public Optional<Tracker> findById(Long id) {
+	public Optional<Tracker> findById(UUID id) {
 		return trackerRepository.findById(id);
 	}
 

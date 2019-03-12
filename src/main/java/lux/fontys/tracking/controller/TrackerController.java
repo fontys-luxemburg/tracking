@@ -7,6 +7,7 @@ import lux.fontys.tracking.repository.TrackerRepository;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import java.util.UUID;
 
 @Path("/trackers")
 @Produces("application/json")
@@ -23,7 +24,7 @@ public class TrackerController {
 
     @GET
     @Path("{id}")
-    public Response show(@PathParam("id") Long id) {
+    public Response show(@PathParam("id") UUID id) {
         return Response.ok(trackerFacade.findById(id)).build();
     }
 
