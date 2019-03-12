@@ -1,5 +1,6 @@
 package lux.fontys.tracking.controller;
 
+import lux.fontys.tracking.dto.TrackerDto;
 import lux.fontys.tracking.facade.TrackerFacade;
 import lux.fontys.tracking.model.Tracker;
 
@@ -30,7 +31,7 @@ public class TrackerController {
     }
 
     @POST
-    public Response create(Tracker tracker) {
+    public Response create(TrackerDto tracker) {
         trackerFacade.save(tracker);
         return Response.status(Response.Status.CREATED).build();
     }
