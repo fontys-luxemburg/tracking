@@ -14,6 +14,7 @@
             <property name="hibernate.format_sql" value="true"/>
             <!--<property name="javax.persistence.schema-generation.database.action" value="drop-and-create" />-->
             <property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.SunOneJtaPlatform" />
+            <property name="test" value="Hello world!" />
         </properties>
     </persistence-unit>
 
