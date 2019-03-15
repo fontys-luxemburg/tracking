@@ -1,13 +1,36 @@
 package lux.fontys.tracking.repository;
 
+import lux.fontys.tracking.model.BaseEntity;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
 
-public interface CrudRepository<T, ID> {
+public abstract class CrudRepository<T extends BaseEntity, ID> {
 
-    Optional<T> findById(ID id);
+    @PersistenceContext
+    EntityManager entityManager;
 
-    List<T> findAll();
+    private Class<T> entityClass;
 
-    T save(T entity);
+    public void setEntityClass(Class<T> entityClass) {
+        this.entityClass = entityClass;
+    }
+
+    public List<T> findAll() {
+        return entityManager.createQuery("from " + entityClass.getName(), entityClass).getResultList();
+    }
+
+    public Optional<T> findById(ID id) {
+        return Optional.of(entityManager.find(entityClass, id));
+    }
+
+    public void save(T entity) {
+        if (entity.isNew()) {
+            entityManager.persist(entity);
+        } else {
+            entityManager.merge(entity);
+        }
+    }
 }
