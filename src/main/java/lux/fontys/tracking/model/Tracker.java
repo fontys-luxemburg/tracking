@@ -1,8 +1,5 @@
 package lux.fontys.tracking.model;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;

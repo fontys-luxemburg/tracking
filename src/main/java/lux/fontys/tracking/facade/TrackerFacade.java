@@ -7,6 +7,7 @@ import lux.fontys.tracking.repository.TrackerRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -35,6 +36,7 @@ public class TrackerFacade implements BaseFacade<TrackerDto, Long> {
 	}
 
     @Override
+    @Transactional(Transactional.TxType.REQUIRED)
     public TrackerDto save(TrackerDto entity) {
 	    Tracker tracker = trackerMapper.trackerDtoToTracker(entity);
 	    trackerRepository.save(tracker);
