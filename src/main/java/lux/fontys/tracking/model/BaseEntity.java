@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @MappedSuperclass
-public class BaseEntity implements Serializable {
+public abstract class BaseEntity implements Serializable {
     @Id @GeneratedValue
     private Long id;
 
