@@ -3,24 +3,18 @@ package lux.fontys.tracking.controller;
 import lux.fontys.tracking.dto.TrackerDto;
 import lux.fontys.tracking.facade.TrackerFacade;
 
-
 import lux.fontys.tracking.facade.TripFacade;
-
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 
-import lux.fontys.tracking.message.Reciever;
-
 @Path("/trackers")
 @Produces("application/json")
 @Consumes("application/json")
 public class TrackerController {
 
-    @Inject
-    Reciever r;
     @Inject
     TrackerFacade trackerFacade;
 
@@ -30,7 +24,7 @@ public class TrackerController {
     @GET
     @Transactional
     public Response index() {
-        r.GetMessages();
+
         return Response.ok(trackerFacade.findAll()).build();
     }
 
