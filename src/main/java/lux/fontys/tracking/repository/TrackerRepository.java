@@ -12,13 +12,13 @@ import java.util.Optional;
 import java.util.UUID;
 
 @ApplicationScoped
-public class TrackerRepository implements CrudRepository<Tracker, UUID> {
+public class TrackerRepository implements CrudRepository<Tracker, Long> {
 
     @PersistenceContext
     private EntityManager em;
 
     @Override
-    public Optional<Tracker> findById(UUID id) {
+    public Optional<Tracker> findById(Long id) {
         return Optional.of(em.find(Tracker.class, id));
     }
 

@@ -9,6 +9,14 @@ import javax.persistence.Table;
 @Table(name = "trips")
 public class Trip extends BaseEntity {
 
+    public Tracker getTracker() {
+        return tracker;
+    }
+
+    public void setTracker(Tracker tracker) {
+        this.tracker = tracker;
+    }
+
     @ManyToOne
     @JoinColumn(name = "tracker_id", nullable = false)
     private Tracker tracker;

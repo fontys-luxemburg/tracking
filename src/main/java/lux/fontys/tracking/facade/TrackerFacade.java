@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @ApplicationScoped
-public class TrackerFacade implements BaseFacade<TrackerDto, UUID> {
+public class TrackerFacade implements BaseFacade<TrackerDto, Long> {
 
 	@Inject
 	TrackerRepository trackerRepository;
@@ -22,7 +22,7 @@ public class TrackerFacade implements BaseFacade<TrackerDto, UUID> {
 
 
 	@Override
-	public Optional<TrackerDto> findById(UUID id) {
+	public Optional<TrackerDto> findById(Long id) {
 	    Tracker tracker = trackerRepository.findById(id).get();
         TrackerDto trackerDto = trackerMapper.trackerToTrackerDto(tracker);
 	    return Optional.of(trackerDto);
