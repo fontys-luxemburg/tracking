@@ -1,2 +1,2 @@
-FROM payara/server-full
+FROM payara/micro
 COPY /target/tracking.war $DEPLOY_DIR
