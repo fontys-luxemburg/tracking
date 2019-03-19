@@ -6,6 +6,8 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.Query;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @ApplicationScoped
 public class TripRepository extends CrudRepository<Trip, Long> {

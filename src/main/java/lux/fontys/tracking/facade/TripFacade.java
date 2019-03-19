@@ -1,5 +1,6 @@
 package lux.fontys.tracking.facade;
 
+import lux.fontys.tracking.dto.TrackerDto;
 import lux.fontys.tracking.dto.TripDto;
 import lux.fontys.tracking.mapper.TripMapper;
 import lux.fontys.tracking.model.Tracker;
@@ -13,6 +14,7 @@ import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @ApplicationScoped
 public class TripFacade implements BaseFacade<TripDto, Long> {
@@ -43,4 +45,5 @@ public class TripFacade implements BaseFacade<TripDto, Long> {
         tripRepository.save(trip);
         return entity;
     }
+
 }

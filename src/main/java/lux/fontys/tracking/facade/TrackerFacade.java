@@ -21,7 +21,6 @@ public class TrackerFacade implements BaseFacade<TrackerDto, Long> {
 	@Inject
     TrackerMapper trackerMapper;
 
-
 	@Override
 	public Optional<TrackerDto> findById(Long id) {
 	    Tracker tracker = trackerRepository.findById(id).get();
@@ -42,4 +41,11 @@ public class TrackerFacade implements BaseFacade<TrackerDto, Long> {
 	    trackerRepository.save(tracker);
         return entity;
     }
+
+    public Optional<TrackerDto>findByUUID(UUID id){
+		Optional<Tracker> t = trackerRepository.findByUUID(id);
+		TrackerDto td = new TrackerDto();
+		td.setTrackerId(t.get().getTrackerId());
+		return Optional.of(td);
+	}
 }
