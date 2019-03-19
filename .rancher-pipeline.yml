@@ -4,7 +4,7 @@ stages:
   - publishImageConfig:
       dockerfilePath: ./Dockerfile
       buildContext: .
-      tag: tracking:test
+      tag: tracking:latest
       registry: 127.0.0.1:34766
 - name: deploy
   steps:
