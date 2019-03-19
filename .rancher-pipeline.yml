@@ -4,8 +4,9 @@ stages:
   - publishImageConfig:
       dockerfilePath: ./Dockerfile
       buildContext: .
-      tag: tracking:latest
-      registry: 127.0.0.1:34766
+      tag: redxice/tracking:latest
+      pushRemote: true
+      registry: index.docker.io
 - name: deploy
   steps:
   - applyYamlConfig:
