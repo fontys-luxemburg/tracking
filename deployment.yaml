@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: tracking
-        image: tracking:${CICD_GIT_BRANCH}
+        image: tracking:deployment
         env:
         - name: GET_HOSTS_FROM
           value: dns
