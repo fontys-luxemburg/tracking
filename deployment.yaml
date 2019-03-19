@@ -1,7 +1,7 @@
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
 metadata:
-  name: tracking
+  name: tracking-deployment
   labels:
     app: tracking
 spec:
@@ -18,7 +18,7 @@ spec:
         - name: pipeline-docker-registry
       containers:
       - name: tracking
-        image: tracking:deployment
+        image: ${CICD_IMAGE}:test
         env:
         - name: GET_HOSTS_FROM
           value: dns
