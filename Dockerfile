@@ -1,2 +1,3 @@
-FROM payara/server-full:latest
+FROM payara/server-full
+
 COPY target/tracking.war $DEPLOY_DIR
