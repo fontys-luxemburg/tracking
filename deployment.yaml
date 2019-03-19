@@ -15,7 +15,7 @@ spec:
         app: tracking-app
     spec:
       imagePullSecrets:
-      - name: pipeline-docker-registry
+      - name: p-wx8vm-dockerregistrypwx8vmpipeline
       containers:
       - name: tracking
         image: ${CICD_IMAGE}:latest
