@@ -15,12 +15,9 @@ spec:
         app: tracking-app
     spec:
       imagePullSecrets:
-        - name: pipeline-docker-registry
+      - name: pipeline-docker-registry
       containers:
       - name: tracking
-        image: ${CICD_IMAGE}:test
-        env:
-        - name: GET_HOSTS_FROM
-          value: dns
+        image: ${CICD_IMAGE}:latest
         ports:
         - containerPort: 8080
