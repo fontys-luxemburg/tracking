@@ -15,7 +15,7 @@ spec:
         app: tracking-app
     spec:
       imagePullSecrets:
-      - name: pipeline-docker-registry
+      - name: redxice
       containers:
       - name: tracking
         image: ${CICD_IMAGE}:latest
