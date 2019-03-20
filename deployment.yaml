@@ -21,3 +21,12 @@ spec:
         image: ${CICD_IMAGE}:latest
         ports:
         - containerPort: 8080
+          hostIP: 52.166.205.79
+          hostPort: 8080
+          name: 8080tcp80800
+          protocol: TCP
+        - containerPort: 4848
+          hostIP: 52.166.205.79
+          hostPort: 9001
+          name: 4848tcp4848
+          protocol: TCP
