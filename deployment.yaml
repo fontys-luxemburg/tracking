@@ -27,6 +27,6 @@ spec:
           protocol: TCP
         - containerPort: 4848
           hostIP: 52.166.205.79
-          hostPort: 9001
+          hostPort: 4848
           name: 4848tcp4848
           protocol: TCP
