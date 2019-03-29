@@ -1,5 +1,9 @@
 FROM payara/micro:5-SNAPSHOT
 RUN wget -O $PAYARA_PATH/database-connector.jar https://jdbc.postgresql.org/download/postgresql-42.2.5.jar
+RUN apt-get update && \
+      apt-get -y install sudo
+RUN useradd -m docker && echo "docker:docker" | chpasswd && adduser docker sudo
+USER docker
 RUN mkdir -m 777 /removethis/
 COPY /src/main/ /deployments
 RUN jar -cvf deployments/tracking.war /removethis/*  
