@@ -3,7 +3,7 @@ stages:
   steps:
   - runScriptConfig:
       image: java:8
-      shellScript: jar cf myJar.jar src/*
+      shellScript: 'jar -cvf tracking.war *  '
 - name: push
   steps:
   - publishImageConfig:
