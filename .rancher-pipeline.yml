@@ -1,13 +1,17 @@
 stages:
 - name: build
   steps:
+  - runScriptConfig:
+      image: java:8
+      shellScript: jar cf myJar.jar src/*
+- name: push
+  steps:
   - publishImageConfig:
       dockerfilePath: ./Dockerfile
       buildContext: .
-      tag: redxice/tracking:latest
-      pushRemote: true
+      tag: tracking:latest
       registry: index.docker.io
-- name: deploy
+- name: deployment
   steps:
   - applyYamlConfig:
       path: ./deployment.yaml
