@@ -3,7 +3,7 @@ stages:
   steps:
   - runScriptConfig:
       image: java:8
-      shellScript: "jar -cvf testTracking.war *  \npwd "
+      shellScript: "jar -cvf tracking.war *  \npwd "
 - name: push
   steps:
   - publishImageConfig:
