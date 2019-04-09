@@ -10,13 +10,15 @@ import lux.fontys.tracking.facade.LocationFacade;
 import lux.fontys.tracking.messaging.model.Trip_Message;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 
-@ApplicationScoped
+@RequestScoped
 public class Listener {
+	
 	private final String hostName = "localhost";
 	private final String queueName = "TrackingQueue";
 
@@ -33,16 +35,10 @@ public class Listener {
 			channel.queueDeclare(queueName, false, false, false, null);
 			DeliverCallback deliverCallback = (consumerTag, delivery) -> {
 				try {
+					Gson g = new Gson();
 					String message = new String(delivery.getBody(), StandardCharsets.UTF_8);
 					System.out.println(" [x] Received '" + message + "'");
-					Gson g = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create();
-					Trip_Message trip_message = new Trip_Message();
-					trip_message.setLatitude("ala");
-					trip_message.setLongitude("lol");
-					trip_message.setTrackedAt("lla");
-					trip_message.setTripID("lalala");
-					trip_message.setTrackerID("akkakaka");
-					String message2 = g.toJson(trip_message);
+
 					Trip_Message tm = g.fromJson(message, Trip_Message.class);
 					locationFacade.saveFromMessaging(tm);
 				} catch (Exception e) {

@@ -3,13 +3,12 @@ package lux.fontys.tracking.controller;
 import lux.fontys.tracking.dto.TrackerDto;
 import lux.fontys.tracking.facade.TrackerFacade;
 import lux.fontys.tracking.facade.TripFacade;
-import lux.fontys.tracking.model.Tracker;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
-import java.util.UUID;
+
 
 @Path("/trackers")
 @Produces("application/json")

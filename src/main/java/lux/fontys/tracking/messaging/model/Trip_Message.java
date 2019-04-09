@@ -1,50 +1,52 @@
 package lux.fontys.tracking.messaging.model;
 
 
-public class Trip_Message {
-	String trackerID;
-	String tripID;
-	String longitude;
-	String latitude;
-	String trackedAt;
+import java.util.Date;
 
-	public String getTrackerID() {
+public class Trip_Message {
+	Long trackerID;
+	Long tripID;
+	double longitude;
+	double latitude;
+	Date trackedAt;
+
+	public Long getTrackerID() {
 		return trackerID;
 	}
 
-	public void setTrackerID(String trackerID) {
+	public void setTrackerID(Long trackerID) {
 		this.trackerID = trackerID;
 	}
 
-	public String getTripID() {
+	public Long getTripID() {
 		return tripID;
 	}
 
-	public void setTripID(String tripID) {
+	public void setTripID(Long tripID) {
 		this.tripID = tripID;
 	}
 
-	public String getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(String longitude) {
+	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 
-	public String getLatitude() {
+	public double getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(String latitude) {
+	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
 
-	public String getTrackedAt() {
+	public Date getTrackedAt() {
 		return trackedAt;
 	}
 
-	public void setTrackedAt(String trackedAt) {
+	public void setTrackedAt(Date trackedAt) {
 		this.trackedAt = trackedAt;
 	}
 }

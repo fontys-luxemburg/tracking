@@ -45,7 +45,7 @@ public class TrackerFacade implements BaseFacade<TrackerDto, Long> {
     public Optional<TrackerDto>findByUUID(UUID id){
 		Optional<Tracker> t = trackerRepository.findByUUID(id);
 		TrackerDto td = new TrackerDto();
-		td.setTrackerId(t.get().getTrackerId());
+
 		return Optional.of(td);
 	}
 }

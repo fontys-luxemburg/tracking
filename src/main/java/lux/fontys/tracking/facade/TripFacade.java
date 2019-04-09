@@ -33,7 +33,10 @@ public class TripFacade implements BaseFacade<TripDto, Long> {
     public Optional<TripDto> findById(Long id) {
         return Optional.of(tripMapper.tripToTripDto(tripRepository.findById(id).orElse(null)));
     }
-
+    Optional<Trip> findByIdTrip(Long id){
+        if(tripRepository.findByManID(id).isPresent())return tripRepository.findById(id);
+        return Optional.empty();
+    }
     @Override
     public List<TripDto> findAll() {
         return tripMapper.tripsToTripDtos(tripRepository.findAll());

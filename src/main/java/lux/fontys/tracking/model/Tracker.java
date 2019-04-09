@@ -10,31 +10,11 @@ import java.util.UUID;
 @Table(name = "trackers")
 public class Tracker extends BaseEntity {
 
-    @Column(unique = true)
-    @NotNull
-    private UUID trackerId;
-    private String name;
-
+    @Transient
     @OneToMany(mappedBy = "tracker", fetch = FetchType.LAZY)
     private List<Trip> trips = new ArrayList<>();
 
     public Tracker() {
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public UUID getTrackerId() {
-        return trackerId;
-    }
-
-    public void setTrackerId(UUID trackerId) {
-        this.trackerId = trackerId;
     }
 
     public List<Trip> getTrips() {

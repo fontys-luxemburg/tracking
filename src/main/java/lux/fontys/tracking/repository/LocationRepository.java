@@ -5,7 +5,9 @@ import lux.fontys.tracking.model.Location;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.Query;
+import javax.transaction.Transactional;
 import java.util.List;
+
 
 @ApplicationScoped
 public class LocationRepository extends CrudRepository<Location, Long> {
