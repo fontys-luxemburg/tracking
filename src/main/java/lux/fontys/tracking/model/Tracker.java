@@ -13,20 +13,11 @@ public class Tracker extends BaseEntity {
     @Column(unique = true)
     @NotNull
     private UUID trackerId;
-    private String name;
 
     @OneToMany(mappedBy = "tracker", fetch = FetchType.LAZY)
     private List<Trip> trips = new ArrayList<>();
 
     public Tracker() {
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public UUID getTrackerId() {
