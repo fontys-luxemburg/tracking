@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import java.util.Optional;
 import java.util.UUID;
 
 @Path("/trackers")
@@ -31,7 +32,11 @@ public class TrackerController {
     @GET
     @Path("{uuid}")
     public Response show(@PathParam("uuid") UUID uuid) {
-        return Response.ok(trackerFacade.findbyUuid(uuid)).build();
+        Optional<TrackerDto> trackerDto = trackerFacade.findbyUuid(uuid);
+        if (trackerDto.isPresent()){
+            return Response.ok(trackerDto.get()).build();
+        }
+        return Response.status(Response.Status.NOT_FOUND).build();
     }
 
     @GET
