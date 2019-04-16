@@ -41,8 +41,10 @@ public class TrackerController {
     }
 
     @POST
-    public Response create(TrackerDto tracker) {
-        trackerFacade.save(tracker);
-        return Response.status(Response.Status.CREATED).build();
+    public Response create() {
+        UUID uuid = UUID.randomUUID();
+        trackerFacade.save(new TrackerDto(uuid));
+
+        return Response.status(Response.Status.CREATED).entity(uuid).build();
     }
 }
