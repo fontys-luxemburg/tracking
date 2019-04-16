@@ -29,9 +29,9 @@ public class TrackerController {
     }
 
     @GET
-    @Path("{id}")
-    public Response show(@PathParam("id") Long id) {
-        return Response.ok(trackerFacade.findById(id)).build();
+    @Path("{uuid}")
+    public Response show(@PathParam("uuid") UUID uuid) {
+        return Response.ok(trackerFacade.findbyUuid(uuid)).build();
     }
 
     @GET

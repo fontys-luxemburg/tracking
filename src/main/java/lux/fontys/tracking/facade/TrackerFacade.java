@@ -29,6 +29,12 @@ public class TrackerFacade implements BaseFacade<TrackerDto, Long> {
 	    return Optional.of(trackerDto);
 	}
 
+	public Optional<TrackerDto> findbyUuid(UUID uuid){
+		Tracker tracker = trackerRepository.findByUuid(uuid).get();
+		TrackerDto trackerDto = trackerMapper.trackerToTrackerDto(tracker);
+		return Optional.of(trackerDto);
+	}
+
 	@Override
 	public List<TrackerDto>  findAll() {
 	    List<TrackerDto> trackerDtos = trackerMapper.trackersToTrackerDtos(trackerRepository.findAll());
