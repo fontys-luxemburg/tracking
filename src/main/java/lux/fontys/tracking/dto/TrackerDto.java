@@ -6,6 +6,9 @@ public class TrackerDto extends BaseDto {
 
     private UUID trackerId;
 
+    public TrackerDto() {
+    }
+
     public TrackerDto(UUID trackerId) {
         this.trackerId = trackerId;
     }
