@@ -17,6 +17,9 @@ public class Tracker extends BaseEntity {
     @OneToMany(mappedBy = "tracker", fetch = FetchType.LAZY)
     private List<Trip> trips = new ArrayList<>();
 
+    @NotNull
+    private String vehicle_registrationID;
+
     public Tracker() {
     }
 
@@ -34,5 +37,13 @@ public class Tracker extends BaseEntity {
 
     public void setTrips(List<Trip> trips) {
         this.trips = trips;
+    }
+
+    public String getVehicle_registrationID() {
+        return vehicle_registrationID;
+    }
+
+    public void setVehicle_registrationID(String vehicle_registrationID) {
+        this.vehicle_registrationID = vehicle_registrationID;
     }
 }
