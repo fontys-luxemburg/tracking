@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -51,5 +52,16 @@ public class TrackerController {
         trackerFacade.save(new TrackerDto(uuid));
 
         return Response.status(Response.Status.CREATED).entity(uuid).build();
+    }
+
+    @GET
+    @Path("/vehicle/{id}")
+    public Response getTrackersByVehicleID(@PathParam("id") String vehicle_ID) {
+        List<TrackerDto> trackers = trackerFacade.findAllByVehicleID(vehicle_ID);
+        if(trackers != null)
+        {
+            return Response.ok(trackers).build();
+        }
+        return Response.status(Response.Status.NOT_FOUND).build();
     }
 }

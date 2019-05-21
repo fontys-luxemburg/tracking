@@ -31,4 +31,15 @@ public class TrackerRepository extends CrudRepository<Tracker, Long> {
             return Optional.of(null);
         }
     }
+
+    public List<Tracker> findByVehicleID(String vehicleID)
+    {
+        Query query = entityManager.createQuery("select t from Tracker t where t.vehicle_registrationID = :vehicleID", Tracker.class);
+        query.setParameter("vehicleID", vehicleID);
+        try{
+            return (List<Tracker>) query.getResultList();
+        } catch (Exception e){
+            return null;
+        }
+    }
 }

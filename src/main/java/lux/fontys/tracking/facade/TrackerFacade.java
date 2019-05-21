@@ -48,4 +48,8 @@ public class TrackerFacade implements BaseFacade<TrackerDto, Long> {
 	    trackerRepository.save(tracker);
         return entity;
     }
+
+	public List<TrackerDto> findAllByVehicleID(String vehicle_id) {
+		return trackerMapper.trackersToTrackerDtos(trackerRepository.findByVehicleID(vehicle_id));
+	}
 }
