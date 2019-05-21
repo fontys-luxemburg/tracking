@@ -7,6 +7,7 @@ import lux.fontys.tracking.repository.TrackerRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.sound.midi.Track;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
@@ -49,7 +50,11 @@ public class TrackerFacade implements BaseFacade<TrackerDto, Long> {
         return entity;
     }
 
-	public List<TrackerDto> findAllByVehicleID(String vehicle_id) {
-		return trackerMapper.trackersToTrackerDtos(trackerRepository.findByVehicleID(vehicle_id));
+	public void saveTracker(Tracker tracker) {
+		trackerRepository.save(tracker);
+	}
+
+	public List<TrackerDto> findAllByVehicleID(String vehicleID) {
+		return trackerMapper.trackersToTrackerDtos(trackerRepository.findByVehicleID(vehicleID));
 	}
 }

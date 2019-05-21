@@ -2,6 +2,7 @@ package lux.fontys.tracking;
 
 import lux.fontys.tracking.dto.TrackerDto;
 import lux.fontys.tracking.facade.TrackerFacade;
+import lux.fontys.tracking.model.Tracker;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
@@ -27,22 +28,22 @@ public class Seeds {
         cal.add(Calendar.DATE, -10);
 
         //Create trackers
-        TrackerDto trackerDto1 = new TrackerDto();
-        trackerDto1.setVehicle_registrationID("AB1234");
-        trackerDto1.setTrackerId(UUID.randomUUID());
-        trackerDto1.setDestroyedDate(cal.getTime());
+        Tracker tracker1 = new Tracker();
+        tracker1.setVehicleID("AB1234");
+        tracker1.setTrackerId(UUID.randomUUID());
+        tracker1.setDestroyedDate(cal.getTime());
 
-        TrackerDto trackerDto2 = new TrackerDto();
-        trackerDto2.setVehicle_registrationID("AB1234");
-        trackerDto2.setTrackerId(UUID.randomUUID());
-        trackerDto2.setDestroyedDate(cal.getTime());
+        Tracker tracker2 = new Tracker();
+        tracker2.setVehicleID("AB1234");
+        tracker2.setTrackerId(UUID.randomUUID());
+        tracker2.setDestroyedDate(cal.getTime());
 
-        TrackerDto trackerDto3 = new TrackerDto();
-        trackerDto3.setVehicle_registrationID("AB1234");
-        trackerDto3.setTrackerId(UUID.randomUUID());
+        Tracker tracker3 = new Tracker();
+        tracker3.setVehicleID("AB1234");
+        tracker3.setTrackerId(UUID.randomUUID());
 
-        trackerFacade.save(trackerDto1);
-        trackerFacade.save(trackerDto2);
-        trackerFacade.save(trackerDto3);
+        trackerFacade.saveTracker(tracker1);
+        trackerFacade.saveTracker(tracker2);
+        trackerFacade.saveTracker(tracker3);
     }
 }

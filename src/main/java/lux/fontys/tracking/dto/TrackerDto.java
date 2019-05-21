@@ -13,9 +13,9 @@ public class TrackerDto extends BaseDto {
 
     private Date destroyedDate;
 
-    private String vehicle_registrationID;
-
     private List<Trip> trips = new ArrayList<>();
+
+    private String vehicleID;
 
     public TrackerDto() {
     }
@@ -48,12 +48,12 @@ public class TrackerDto extends BaseDto {
         this.trips = trips;
     }
 
-    public String getVehicle_registrationID() {
-        return vehicle_registrationID;
+    public String getVehicleID() {
+        return vehicleID;
     }
 
-    public void setVehicle_registrationID(String vehicle_registrationID) {
-        this.vehicle_registrationID = vehicle_registrationID;
+    public void setVehicleID(String vehicleID) {
+        this.vehicleID = vehicleID;
     }
 
 }
