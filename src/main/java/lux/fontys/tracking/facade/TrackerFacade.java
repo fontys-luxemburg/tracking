@@ -9,6 +9,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.sound.midi.Track;
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -56,5 +57,9 @@ public class TrackerFacade implements BaseFacade<TrackerDto, Long> {
 
 	public List<TrackerDto> findAllByVehicleID(String vehicleID) {
 		return trackerMapper.trackersToTrackerDtos(trackerRepository.findByVehicleID(vehicleID));
+	}
+
+	public List<TrackerDto> findByVehicleIDBetweenDates(String vehicleID, Date begin, Date end) {
+		return trackerMapper.trackersToTrackerDtos(trackerRepository.findByVehicleIDBetweenDates(vehicleID, begin, end));
 	}
 }

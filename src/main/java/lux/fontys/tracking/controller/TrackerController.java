@@ -9,9 +9,11 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.zip.DataFormatException;
 
 @Path("/trackers")
 @Produces("application/json")
@@ -56,8 +58,22 @@ public class TrackerController {
 
     @GET
     @Path("/vehicle/{id}")
-    public Response getTrackersByVehicleID(@PathParam("id") String vehicle_ID) {
-        List<TrackerDto> trackers = trackerFacade.findAllByVehicleID(vehicle_ID);
+    public Response getTrackersByVehicleID(@PathParam("id") String vehicleID) {
+        List<TrackerDto> trackers = trackerFacade.findAllByVehicleID(vehicleID);
+        if(trackers != null)
+        {
+            return Response.ok(trackers).build();
+        }
+        return Response.status(Response.Status.NOT_FOUND).build();
+    }
+
+    @GET
+    @Path("/vehicle")
+    public Response getTrackersByVehicleIDBetweenDates(
+            @QueryParam("vehicleID") String vehicleID,
+            @QueryParam("begin") Date begin,
+            @QueryParam("end") Date end) {
+        List<TrackerDto> trackers = trackerFacade.findByVehicleIDBetweenDates(vehicleID, begin, end);
         if(trackers != null)
         {
             return Response.ok(trackers).build();
