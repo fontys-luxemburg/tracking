@@ -17,7 +17,7 @@ public class Tracker extends BaseEntity {
 
     private Date destroyedDate;
 
-    @OneToMany(mappedBy = "tracker", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "tracker", fetch = FetchType.EAGER)
     private List<Trip> trips = new ArrayList<>();
 
     private String vehicleID;
