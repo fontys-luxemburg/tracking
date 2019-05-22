@@ -17,6 +17,8 @@ public class TrackerDto extends BaseDto {
 
     private String vehicleID;
 
+    private Date createdAt;
+
     public TrackerDto() {
     }
 
@@ -54,6 +56,16 @@ public class TrackerDto extends BaseDto {
 
     public void setVehicleID(String vehicleID) {
         this.vehicleID = vehicleID;
+    }
+
+    @Override
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    @Override
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
 }
