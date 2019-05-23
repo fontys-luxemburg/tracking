@@ -43,4 +43,8 @@ public class TripFacade implements BaseFacade<TripDto, Long> {
         tripRepository.save(trip);
         return entity;
     }
+
+    public void saveTrip(Trip trip) {
+        tripRepository.save(trip);
+    }
 }
