@@ -1,16 +1,14 @@
 package lux.fontys.tracking.facade;
 
+import lux.fontys.tracking.dto.TrackerDto;
 import lux.fontys.tracking.dto.TripDto;
 import lux.fontys.tracking.mapper.TripMapper;
-import lux.fontys.tracking.model.Tracker;
 import lux.fontys.tracking.model.Trip;
-import lux.fontys.tracking.repository.TrackerRepository;
 import lux.fontys.tracking.repository.TripRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.swing.text.html.Option;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,5 +44,16 @@ public class TripFacade implements BaseFacade<TripDto, Long> {
 
     public void saveTrip(Trip trip) {
         tripRepository.save(trip);
+    }
+
+    public List<TrackerDto> GetTripBetweenDates(List<TrackerDto> trackers, Date begin, Date end) {
+        for (TrackerDto tracker : trackers) {
+            List<Trip> trackerTrips = tripRepository.findAllForTrackerBetweendates(tracker.getId(), begin, end);
+            if(trackerTrips != null)
+            {
+                tracker.setTrips(trackerTrips);
+            }
+        }
+        return trackers;
     }
 }

@@ -73,9 +73,12 @@ public class TrackerController {
             @QueryParam("vehicleID") String vehicleID,
             @QueryParam("begin") Long begin,
             @QueryParam("end") Long end) {
-        List<TrackerDto> trackers = trackerFacade.findByVehicleIDBetweenDates(vehicleID, new Date(begin), new Date(end));
+        Date beginDate = new Date(begin);
+        Date endDate = new Date(end);
+        List<TrackerDto> trackers = trackerFacade.findByVehicleIDBetweenDates(vehicleID, beginDate, endDate);
         if(trackers != null)
         {
+            trackers = tripFacade.GetTripBetweenDates(trackers, beginDate, endDate);
             return Response.ok(trackers).build();
         }
         return Response.status(Response.Status.NOT_FOUND).build();
