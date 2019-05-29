@@ -4,11 +4,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-            	try{
-           		 jar -cvf tracking.war * 
-            	}catch(err){
-            	echo err
-            	}
+            	echo 'je'
        		}
         }
         stage('Test') {
