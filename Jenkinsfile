@@ -5,7 +5,7 @@ pipeline {
       post {
         success {
           archiveArtifacts 'target/*.war'
-          sh 'docker build -t redxice/payara:$BUILD_NUMBER .'
+          sh 'docker build -t redxice/payara:$BRANCH_NAME .'
 
         }
 
