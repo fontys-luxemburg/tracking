@@ -28,5 +28,4 @@ public class TripRepository extends CrudRepository<Trip, Long> {
         query.setParameter("begin", begin);
         query.setParameter("end", end);
         return query.getResultList();
-    }
-}
+    }}
