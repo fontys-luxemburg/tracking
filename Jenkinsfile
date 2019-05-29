@@ -1,17 +1,11 @@
 pipeline {
-	agent any
-
+    agent none 
     stages {
         stage('Example Build') {
-        agent { docker 'maven:alpine' } 
-        try{
+            agent { docker 'maven:3-alpine' } 
             steps {
                 echo 'Hello, Maven'
                 sh 'mvn --version'
-            }
-            }catch(err){
-             echo 'Something failed, I should sound the klaxons!'
-            throw
             }
         }
     }
