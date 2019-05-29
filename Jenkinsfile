@@ -5,6 +5,11 @@ pipeline {
       steps {
         sh 'mvn clean install'
       }
+      post{
+        success{
+          archiveArtifacts: 'target/*.war'
+        }
+      }
     }
     stage('Test') {
       steps {
