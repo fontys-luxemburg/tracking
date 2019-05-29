@@ -1,21 +1,19 @@
 pipeline {
-	agent { docker 'gcc:latest' }
+	agent none
 
     stages {
-        stage('Build') {
+        stage('Example Build') {
+            agent { docker 'maven:3-alpine' } 
             steps {
-            	sh 'make'
-            	archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
-       		}
-        }
-        stage('Test') {
-            steps {
-                echo 'Testing..'
+                echo 'Hello, Maven'
+                sh 'mvn --version'
             }
         }
-        stage('Deploy') {
+        stage('Example Test') {
+            agent { docker 'openjdk:8-jre' } 
             steps {
-                echo 'Deploying....'
+                echo 'Hello, JDK'
+                sh 'java -version'
             }
         }
     }
