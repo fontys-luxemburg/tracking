@@ -8,6 +8,7 @@ pipeline {
       post{
         success{
           archiveArtifacts 'target/*.war'
+          sh 'docker build -t redxice/payara:$BUILD_NUMBER'
         }
       }
     }
@@ -18,7 +19,7 @@ pipeline {
       }
       post{
         always{
-          junit 'target/site/surefire-report.html'
+          junit 'target/site/surefire-report.xml'
         }
       }
     }
