@@ -1,0 +1,17 @@
+version: "3.1"
+services:
+
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: tracking
+    ports:
+      - 5432:5432
+  tracking:
+    image: redxice/payara:$BUILD_NUMBER
+    ports:
+      - 9050:8080
+      - 4848:4848
+      - 8181:8181
