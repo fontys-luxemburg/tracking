@@ -7,9 +7,9 @@ pipeline {
           archiveArtifacts 'target/*.war'
           sh 'docker build -t redxice/payara:$BRANCH_NAME .'
           sh 'docker push redxice/payara:$BRANCH_NAME'
-          docker.withDockerRegistry([ credentialsId: "docker", url: "" ]) {
+          sh 'docker.withDockerRegistry([ credentialsId: "docker", url: "" ]) {
         bat "docker push redxice/payara:$BRANCH_NAME"
-    }
+    }'
         }
 
       }
