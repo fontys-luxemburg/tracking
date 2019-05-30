@@ -48,12 +48,21 @@ public class TrackerController {
         return Response.ok(tripFacade.getAllFor(id)).build();
     }
 
+    //TODO Registration ID meegeven
     @POST
-    public Response create() {
+    @Path("{vehicleID}")
+    @Transactional
+    public Response create(@PathParam("vehicleID") String vehicleID) {
+        trackerFacade.setLastTracker(vehicleID);
         UUID uuid = UUID.randomUUID();
-        trackerFacade.save(new TrackerDto(uuid));
-
-        return Response.status(Response.Status.CREATED).entity(uuid).build();
+        try {
+            trackerFacade.save(new TrackerDto(uuid, vehicleID));
+            return Response.status(Response.Status.CREATED).entity(uuid).build();
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
 
     @GET

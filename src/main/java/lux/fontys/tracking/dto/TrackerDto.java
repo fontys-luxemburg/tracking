@@ -22,8 +22,9 @@ public class TrackerDto extends BaseDto {
     public TrackerDto() {
     }
 
-    public TrackerDto(UUID trackerId) {
+    public TrackerDto(UUID trackerId, String vehicleID) {
         this.trackerId = trackerId;
+        this.vehicleID = vehicleID;
     }
 
     public UUID getTrackerId() {
