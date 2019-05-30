@@ -11,7 +11,7 @@ pipeline {
         success {
           archiveArtifacts 'target/*.war'
           script{
-          dockerImage = docker.build registry + "$BRANCH_NAME"
+          dockerImage = docker.build registry + ":$BRANCH_NAME"
           docker.withRegistry( '', docker ) {
           dockerImage.push()
           }
