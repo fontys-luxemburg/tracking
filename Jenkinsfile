@@ -12,7 +12,9 @@ pipeline {
           archiveArtifacts 'target/*.war'
           script{
           dockerImage = docker.build registry + ":$BRANCH_NAME"
-          docker.withRegistry( '', docker ) {
+          }
+          script{
+          docker.withRegistry( '', registryCredential ) {
           dockerImage.push()
           }
           }
