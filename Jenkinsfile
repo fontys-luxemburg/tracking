@@ -26,6 +26,10 @@ pipeline {
         sh 'mvn test'
       }
     }
+    stage('push image'){
+       withDockerRegistry([ credentialsId: "docker", url: "" ]) {
+        bat "docker push redxice/payara:$BRANCH_NAME"
+    }
     stage('deploy') {
       steps {
         sh 'docker-compose up -d '
