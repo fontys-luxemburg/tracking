@@ -1,4 +1,8 @@
 pipeline {
+  environment {
+      registry = "redxice/payara"
+      registryCredential = 'docker'
+    }
   agent any
   stages {
     stage('build') {
@@ -6,12 +10,7 @@ pipeline {
         success {
           archiveArtifacts 'target/*.war'
           sh 'docker build -t redxice/payara:$BRANCH_NAME .'
-          sh 'docker push redxice/payara:$BRANCH_NAME'
-          sh 'docker.withDockerRegistry([ credentialsId: "docker", url: "" ]) {
-        bat "docker push redxice/payara:$BRANCH_NAME"
-    }'
         }
-
       }
       steps {
         sh 'mvn clean install'
@@ -27,6 +26,13 @@ pipeline {
       }
       steps {
         sh 'mvn test'
+      }
+    }
+    stage('Building image') {
+      steps{
+        script {
+          docker.build registry + ":$BRANCH_NAME"
+        }
       }
     }
     stage('deploy') {
