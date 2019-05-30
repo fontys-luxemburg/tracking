@@ -12,6 +12,9 @@ pipeline {
           archiveArtifacts 'target/*.war'
           script{
           dockerImage = docker.build registry + "$BRANCH_NAME"
+          docker.withRegistry( '', docker ) {
+          dockerImage.push()
+          }
           }
         }
       }
@@ -29,15 +32,6 @@ pipeline {
       }
       steps {
         sh 'mvn test'
-      }
-    }
-    stage('Pushing image') {
-      steps{
-        script {
-         docker.withRegistry( '', docker ) {
-          dockerImage.push()
-          }
-        }
       }
     }
     stage('deploy') {
