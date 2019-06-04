@@ -3,6 +3,7 @@ package lux.fontys.tracking.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,8 +15,12 @@ public class Tracker extends BaseEntity {
     @NotNull
     private UUID trackerId;
 
-    @OneToMany(mappedBy = "tracker", fetch = FetchType.LAZY)
+    private Date destroyedDate;
+
+    @OneToMany(mappedBy = "tracker", fetch = FetchType.EAGER)
     private List<Trip> trips = new ArrayList<>();
+
+    private String vehicleID;
 
     public Tracker() {
     }
@@ -28,11 +33,27 @@ public class Tracker extends BaseEntity {
         this.trackerId = trackerId;
     }
 
+    public Date getDestroyedDate() {
+        return destroyedDate;
+    }
+
+    public void setDestroyedDate(Date destroyedDate) {
+        this.destroyedDate = destroyedDate;
+    }
+
     public List<Trip> getTrips() {
         return trips;
     }
 
     public void setTrips(List<Trip> trips) {
         this.trips = trips;
+    }
+
+    public String getVehicleID() {
+        return vehicleID;
+    }
+
+    public void setVehicleID(String vehicleID) {
+        this.vehicleID = vehicleID;
     }
 }

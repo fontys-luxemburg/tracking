@@ -9,8 +9,11 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.zip.DataFormatException;
 
 @Path("/trackers")
 @Produces("application/json")
@@ -45,11 +48,48 @@ public class TrackerController {
         return Response.ok(tripFacade.getAllFor(id)).build();
     }
 
+    //TODO Registration ID meegeven
     @POST
-    public Response create() {
+    @Path("{vehicleID}")
+    @Transactional
+    public Response create(@PathParam("vehicleID") String vehicleID) {
+        trackerFacade.setLastTracker(vehicleID);
         UUID uuid = UUID.randomUUID();
-        trackerFacade.save(new TrackerDto(uuid));
+        try {
+            trackerFacade.save(new TrackerDto(uuid, vehicleID));
+            return Response.status(Response.Status.CREATED).entity(uuid).build();
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
 
-        return Response.status(Response.Status.CREATED).entity(uuid).build();
+    @GET
+    @Path("/vehicle/{id}")
+    public Response getTrackersByVehicleID(@PathParam("id") String vehicleID) {
+        List<TrackerDto> trackers = trackerFacade.findAllByVehicleID(vehicleID);
+        if(trackers != null)
+        {
+            return Response.ok(trackers).build();
+        }
+        return Response.status(Response.Status.NOT_FOUND).build();
+    }
+
+    @GET
+    @Path("/vehicle")
+    public Response getTrackersByVehicleIDBetweenDates(
+            @QueryParam("vehicleID") String vehicleID,
+            @QueryParam("begin") Long begin,
+            @QueryParam("end") Long end) {
+        Date beginDate = new Date(begin);
+        Date endDate = new Date(end);
+        List<TrackerDto> trackers = trackerFacade.findByVehicleIDBetweenDates(vehicleID, beginDate, endDate);
+        if(trackers != null)
+        {
+            trackers = tripFacade.GetTripBetweenDates(trackers, beginDate, endDate);
+            return Response.ok(trackers).build();
+        }
+        return Response.status(Response.Status.NOT_FOUND).build();
     }
 }
