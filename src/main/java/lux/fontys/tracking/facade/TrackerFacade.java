@@ -62,4 +62,13 @@ public class TrackerFacade implements BaseFacade<TrackerDto, Long> {
 	public List<TrackerDto> findByVehicleIDBetweenDates(String vehicleID, Date begin, Date end) {
 		return trackerMapper.trackersToTrackerDtos(trackerRepository.findByVehicleIDBetweenDates(vehicleID, begin, end));
 	}
+
+	public void setLastTracker(String vehicleID) {
+		Tracker tracker = trackerRepository.findLastTrackerByVehicle(vehicleID);
+		if(tracker != null)
+		{
+			tracker.setDestroyedDate(new Date());
+			trackerRepository.save(tracker);
+		}
+	}
 }

@@ -23,9 +23,9 @@ public class TripRepository extends CrudRepository<Trip, Long> {
     }
 
     public List<Trip> findAllForTrackerBetweendates(Long trackerId, Date begin, Date end) {
-        Query query = entityManager.createQuery("select t from Trip t where t.tracker.id = :tracker_id and t.startDate between :begin and :end");
+        Query query = entityManager.createQuery("select t from Trip t where t.tracker.id = :tracker_id and t.startDate between :beginDate and :endDate");
         query.setParameter("tracker_id", trackerId);
-        query.setParameter("begin", begin);
-        query.setParameter("end", end);
+        query.setParameter("beginDate", begin);
+        query.setParameter("endDate", end);
         return query.getResultList();
     }}

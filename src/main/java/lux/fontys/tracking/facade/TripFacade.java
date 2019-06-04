@@ -48,11 +48,8 @@ public class TripFacade implements BaseFacade<TripDto, Long> {
 
     public List<TrackerDto> GetTripBetweenDates(List<TrackerDto> trackers, Date begin, Date end) {
         for (TrackerDto tracker : trackers) {
-            List<Trip> trackerTrips = tripRepository.findAllForTrackerBetweendates(tracker.getId(), begin, end);
-            if(trackerTrips != null)
-            {
-                tracker.setTrips(trackerTrips);
-            }
+            List<TripDto> trackerTrips = tripMapper.tripsToTripDtos(tripRepository.findAllForTrackerBetweendates(tracker.getId(), begin, end));
+            tracker.setTrips(trackerTrips);
         }
         return trackers;
     }

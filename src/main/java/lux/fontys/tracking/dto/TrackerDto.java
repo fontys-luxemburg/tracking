@@ -13,7 +13,7 @@ public class TrackerDto extends BaseDto {
 
     private Date destroyedDate;
 
-    private List<Trip> trips = new ArrayList<>();
+    private List<TripDto> trips = new ArrayList<>();
 
     private String vehicleID;
 
@@ -22,8 +22,9 @@ public class TrackerDto extends BaseDto {
     public TrackerDto() {
     }
 
-    public TrackerDto(UUID trackerId) {
+    public TrackerDto(UUID trackerId, String vehicleID) {
         this.trackerId = trackerId;
+        this.vehicleID = vehicleID;
     }
 
     public UUID getTrackerId() {
@@ -42,11 +43,11 @@ public class TrackerDto extends BaseDto {
         this.destroyedDate = destroyedDate;
     }
 
-    public List<Trip> getTrips() {
+    public List<TripDto> getTrips() {
         return trips;
     }
 
-    public void setTrips(List<Trip> trips) {
+    public void setTrips(List<TripDto> trips) {
         this.trips = trips;
     }
 
