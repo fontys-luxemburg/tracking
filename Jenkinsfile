@@ -1,9 +1,4 @@
 pipeline {
-  environment {
-      registry = "redxice/payara"
-      registryCredential = 'docker'
-      dockerImage = ''
-    }
   agent any
   stages {
   	stage('sonarqube') {
@@ -17,15 +12,19 @@ pipeline {
       post {
         success {
           archiveArtifacts 'target/*.war'
-          script{
-          dockerImage = docker.build registry + ":$BRANCH_NAME"
+          script {
+            dockerImage = docker.build registry + ":$BRANCH_NAME"
           }
-          script{
-          docker.withRegistry( '', registryCredential ) {
-          dockerImage.push()
+
+          script {
+            docker.withRegistry( '', registryCredential ) {
+              dockerImage.push()
+            }
           }
-          }
+
+
         }
+
       }
       steps {
         sh 'mvn clean install'
@@ -45,8 +44,15 @@ pipeline {
     }
     stage('deploy') {
       steps {
+        sh 'docker stop $(docker ps -a -q)'
+        sh 'docker-compose down '
         sh 'docker-compose up -d '
-        }
       }
+    }
+  }
+  environment {
+    registry = 'redxice/payara'
+    registryCredential = 'docker'
+    dockerImage = ''
   }
 }
