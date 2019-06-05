@@ -1,15 +1,6 @@
 pipeline {
   agent any
   stages {
-  	stage('sonarqube') {
-  		steps {
-      		script{
-      		withSonarQubeEnv('sonarqube') {
-      		sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.2:sonar'
-    			}
-      		}
-     	 }
-    	}
     stage('build') {
       post {
         success {
