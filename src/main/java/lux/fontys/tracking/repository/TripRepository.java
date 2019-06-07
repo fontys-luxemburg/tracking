@@ -5,6 +5,7 @@ import lux.fontys.tracking.model.Trip;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.Query;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
@@ -28,5 +29,15 @@ public class TripRepository extends CrudRepository<Trip, Long> {
         query.setParameter("beginDate", begin);
         query.setParameter("endDate", end);
         return query.getResultList();
+    }
+
+    public long getNewID() {
+        try {
+            Query q = entityManager.createNativeQuery("select nextval('hibernate_sequence')");
+            return ((BigInteger)q.getSingleResult()).longValue();
+        }
+        catch (Exception e) {
+            throw e;
+        }
     }
 }

@@ -43,9 +43,15 @@ public class TripsController {
     }
 
     @GET
-    public Response getNewID() {
-        long id = tripFacade.getNewID();
+    @Path("/newid")
+    public Response newID() {
+        try {
+            return Response.ok(tripFacade.getNewID()).build();
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
 
-        return Response.status(Response.Status.NOT_FOUND).build();
     }
 }

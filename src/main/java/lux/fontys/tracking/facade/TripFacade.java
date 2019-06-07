@@ -61,4 +61,13 @@ public class TripFacade implements BaseFacade<TripDto, Long> {
         }
         return Optional.empty();
     }
+
+    public long getNewID() {
+        try {
+            return tripRepository.getNewID();
+        }
+        catch (Exception e) {
+            throw e;
+        }
+    }
 }
