@@ -35,6 +35,15 @@ public class TrackerRepository extends CrudRepository<Tracker, Long> {
         }
     }
 
+    public List<Tracker> findAvailableTracker() {
+        Query query = entityManager.createQuery("SELECT t FROM Tracker t WHERE t.id in (SELECT ti.tracker FROM Trip ti WHERE ti.id in (SELECT MAX(ti2.id) FROM Trip ti2 WHERE ti2.tracker = ti.tracker AND ti2.endDate IS NOT NULL))");
+        try{
+            return (List<Tracker>) query.getResultList();
+        } catch (Exception e){
+            return null;
+        }
+    }
+
     public List<Tracker> findByVehicleID(String vehicleID)
     {
         Query query = entityManager.createQuery("select t from Tracker t where t.vehicleID = :vehicleID", Tracker.class);
