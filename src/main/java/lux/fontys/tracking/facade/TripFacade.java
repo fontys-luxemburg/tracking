@@ -53,4 +53,12 @@ public class TripFacade implements BaseFacade<TripDto, Long> {
         }
         return trackers;
     }
+
+    Optional<Trip> findByIdTrip(Long id){
+        Optional<Trip> trip = tripRepository.findById(id);
+        if(trip.isPresent()) {
+            return trip;
+        }
+        return Optional.empty();
+    }
 }

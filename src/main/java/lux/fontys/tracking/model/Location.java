@@ -16,13 +16,22 @@ public class Location extends BaseEntity {
     private Trip trip;
 
     @NotNull
-    private Long latitude;
+    private double latitude;
 
     @NotNull
-    private Long longitude;
+    private double longitude;
 
     @NotNull
     private Date trackedAt;
+
+    public Location() {}
+
+    public Location(Trip trip, double latitude, double longitude, Date trackedAt) {
+        this.trip = trip;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.trackedAt = trackedAt;
+    }
 
     public Trip getTrip() {
         return trip;
@@ -32,19 +41,19 @@ public class Location extends BaseEntity {
         this.trip = trip;
     }
 
-    public Long getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(Long latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public Long getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(Long longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 

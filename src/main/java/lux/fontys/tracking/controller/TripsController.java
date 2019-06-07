@@ -41,4 +41,11 @@ public class TripsController {
         tripFacade.save(trip);
         return Response.status(Response.Status.CREATED).build();
     }
+
+    @GET
+    public Response getNewID() {
+        long id = tripFacade.getNewID();
+
+        return Response.status(Response.Status.NOT_FOUND).build();
+    }
 }
