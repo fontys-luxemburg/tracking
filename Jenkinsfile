@@ -17,9 +17,11 @@ pipeline {
 
 
         }
-        failure{  
-              emailext body: 'Build'+':$BRANCH_NAME'+':$BUILD_NUMBER'+' failed',to:'melvinnboeters@gmail.com', subject: ':$BRANCH_NAME'+':$BUILD_NUMBER'
-         }  
+
+        failure {
+          emailext(body: 'Build'+':$BRANCH_NAME'+':$BUILD_NUMBER'+' failed', to: 'melvinnboeters@gmail.com', subject: ':$BRANCH_NAME'+':$BUILD_NUMBER')
+
+        }
 
       }
       steps {
@@ -38,7 +40,7 @@ pipeline {
         sh 'mvn test'
       }
     }
-     stage('Scan code') {
+    stage('Scan code') {
       steps {
         sh '''mvn sonar:sonar \\
 -Dsonar.host.url=http://sonarqube.swym.nl \\
@@ -48,15 +50,14 @@ pipeline {
     stage('acceptatie') {
       steps {
         sh 'docker stop $(docker ps -a -q)'
-        sh 'docker-compose down -f docker-compose2.yml'
+        sh 'docker-compose down'
         sh 'docker-compose up -f docker-compose2.yml -d '
-   
+      }
+    }
   }
-    }
-    }
   environment {
     registry = 'redxice/payara'
     registryCredential = 'docker'
     dockerImage = ''
- 	 }
-	}
+  }
+}
