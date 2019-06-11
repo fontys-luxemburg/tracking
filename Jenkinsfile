@@ -16,7 +16,7 @@ pipeline {
           }
         }
         always{  
-              emailext body: 'A Test EMail',to:"thebogamerz@gmail.com", subject: 'Test'
+              emailext body: 'A Test EMail',to:'melvinnboeters@gmail.com', subject: 'Test'
          }  
 
       }
