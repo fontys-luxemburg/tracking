@@ -53,7 +53,7 @@ pipeline {
           steps {
             sh 'docker stop $(docker ps -a -q)'
             sh 'docker-compose down'
-            sh 'docker-compose up -f docker-compose2.yml -d '
+            sh 'docker-compose -f docker-compose2.yml up -d '
           }
         }
         stage('error') {
@@ -67,7 +67,7 @@ pipeline {
       steps {
         sh 'docker stop $(docker ps -a -q)'
         sh 'docker-compose down'
-        sh 'docker-compose up -f docker-compose.yml -d '
+        sh 'docker-compose -f docker-compose.yml up  -d '
       }
     }
   }
