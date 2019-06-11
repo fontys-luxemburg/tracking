@@ -14,10 +14,14 @@ pipeline {
               dockerImage.push()
             }
           }
+
+
         }
-        always{  
-              emailext body: 'A Test EMail',to:'melvinnboeters@gmail.com', subject: 'Test'
-         }  
+
+        always {
+          emailext(body: 'A Test EMail', to: 'melvinnboeters@gmail.com', subject: 'Test')
+
+        }
 
       }
       steps {
@@ -34,6 +38,13 @@ pipeline {
       }
       steps {
         sh 'mvn test'
+      }
+    }
+    stage('Scan code') {
+      steps {
+        sh '''mvn sonar:sonar \\
+-Dsonar.host.url=http://sonarqube.swym.nl \\
+-Dsonar.login=55d4924f14df92d208e26fbf47c05de918e3a044'''
       }
     }
   }
