@@ -14,9 +14,10 @@ pipeline {
               dockerImage.push()
             }
           }
-
-
         }
+        always{  
+              emailext body: 'A Test EMail', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Test'
+         }  
 
       }
       steps {
@@ -33,13 +34,6 @@ pipeline {
       }
       steps {
         sh 'mvn test'
-      }
-    }
-    stage('deploy') {
-      steps {
-        sh 'docker stop $(docker ps -a -q)'
-        sh 'docker-compose down '
-        sh 'docker-compose up -d '
       }
     }
   }
