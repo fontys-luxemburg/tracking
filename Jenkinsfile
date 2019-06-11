@@ -48,10 +48,27 @@ pipeline {
       }
     }
     stage('acceptatie') {
+      parallel {
+        stage('acceptatie') {
+          steps {
+            sh 'docker stop $(docker ps -a -q)'
+            sh 'docker-compose down'
+            sh 'docker-compose up -f docker-compose2.yml -d '
+          }
+        }
+        stage('error') {
+          steps {
+            input 'Test cases passed'
+          }
+        }
+      }
+    }
+    stage('deploy') {
       steps {
         sh 'docker stop $(docker ps -a -q)'
-        sh 'docker-compose down'
-        sh 'docker-compose up -f docker-compose2.yml -d '
+        sh '''docker-compose down
+'''
+        sh 'docker-compose up -f docker-compose.yml -d '
       }
     }
   }
