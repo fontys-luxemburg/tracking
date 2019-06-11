@@ -15,8 +15,8 @@ pipeline {
             }
           }
         }
-        always{  
-              emailext body: 'A Test EMail',to:'melvinnboeters@gmail.com', subject: 'Test'
+        failure{  
+              emailext body: 'Build'+':$BRANCH_NAME'+':$BUILD_NUMBER'+' failed',to:'melvinnboeters@gmail.com', subject: ':$BRANCH_NAME'+':$BUILD_NUMBER'
          }  
 
       }
@@ -34,6 +34,13 @@ pipeline {
       }
       steps {
         sh 'mvn test'
+      }
+    }
+    stage('acceptatie') {
+      steps {
+        sh 'docker stop $(docker ps -a -q)'
+        sh 'docker-compose down -f docker-compose2.yml'
+        sh 'docker-compose up -f docker-compose2.yml -d '
       }
     }
   }
