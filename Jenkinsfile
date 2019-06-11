@@ -53,9 +53,10 @@ pipeline {
    
   }
     }
+    }
   environment {
     registry = 'redxice/payara'
     registryCredential = 'docker'
     dockerImage = ''
-  }
-}
+ 	 }
+	}
