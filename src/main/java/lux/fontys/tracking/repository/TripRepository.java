@@ -40,4 +40,10 @@ public class TripRepository extends CrudRepository<Trip, Long> {
             throw e;
         }
     }
+    public boolean tripExists(Long id){
+        Query query = entityManager.createQuery("select t from Trip t where t.id = :id");
+        query.setParameter("id", id);
+        return query.getResultList().size()==1;
+
+    }
 }

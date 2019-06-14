@@ -61,7 +61,9 @@ public class TripFacade implements BaseFacade<TripDto, Long> {
         }
         return Optional.empty();
     }
-
+    public boolean tripsExists(Long id){
+        return tripRepository.tripExists(id);
+    }
     public long getNewID() {
         try {
             return tripRepository.getNewID();
