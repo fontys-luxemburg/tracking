@@ -1,20 +1,21 @@
 package lux.fontys.tracking.messaging.model;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class TripMessage {
 
-    Long trackerID;
+    UUID trackerID;
     Long tripID;
     double longitude;
     double latitude;
     Date trackedAt;
 
-    public Long getTrackerID() {
+    public UUID getTrackerID() {
         return trackerID;
     }
 
-    public void setTrackerID(Long trackerID) {
+    public void setTrackerID(UUID trackerID) {
         this.trackerID = trackerID;
     }
 

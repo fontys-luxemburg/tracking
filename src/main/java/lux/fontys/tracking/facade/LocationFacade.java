@@ -61,7 +61,7 @@ public class LocationFacade implements BaseFacade<LocationDto, Long> {
         if(trip == null) {
             trip = new Trip();
             trip.setId(tripID);
-            TrackerDto trackerDto = trackerFacade.findById(tripMessage.getTrackerID()).get();
+            TrackerDto trackerDto = trackerFacade.findbyUuid(tripMessage.getTrackerID()).get();
             trip.setTracker(trackerMapper.trackerDtoToTracker(trackerDto));
             tripFacade.saveTrip(trip);
         }

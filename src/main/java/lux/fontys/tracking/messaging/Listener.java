@@ -28,7 +28,7 @@ public class Listener {
             Connection connection = factory.newConnection();
             Channel channel = connection.createChannel();
 
-            channel.queueDeclare(queueName, false, false, false, null);
+            channel.queueDeclare(queueName, false, false, true, null);
             DeliverCallback deliverCallback = (consumerTag, delivery) -> {
                 try {
                     Gson g = new Gson();
