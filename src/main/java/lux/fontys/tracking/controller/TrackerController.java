@@ -43,7 +43,7 @@ public class TrackerController {
     }
 
     @GET
-    @Path("available")
+        @Path("available")
     public Response getAvailableTracker(){
         Optional<List<TrackerDto>> trackerDto = trackerFacade.findAvailableTracker();
         if (trackerDto.isPresent()){

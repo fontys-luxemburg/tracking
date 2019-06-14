@@ -103,7 +103,7 @@ public class Seeds {
             Trip trip = new Trip();
             trip.setTracker(tracker);
             trip.setStartDate(begin);
-            //trip.setEndDate(end);
+            trip.setEndDate(end);
 
             Random r = new Random();
             double randomValue = 1 + (30 - 1) * r.nextDouble();
