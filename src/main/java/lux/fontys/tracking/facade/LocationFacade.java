@@ -1,9 +1,7 @@
 package lux.fontys.tracking.facade;
 
 import lux.fontys.tracking.dto.LocationDto;
-import lux.fontys.tracking.dto.TrackerDto;
 import lux.fontys.tracking.mapper.LocationMapper;
-import lux.fontys.tracking.mapper.TrackerMapper;
 import lux.fontys.tracking.messaging.model.TripMessage;
 import lux.fontys.tracking.model.Location;
 import lux.fontys.tracking.model.Trip;
@@ -21,16 +19,10 @@ public class LocationFacade implements BaseFacade<LocationDto, Long> {
     TripFacade tripFacade;
 
     @Inject
-    TrackerFacade trackerFacade;
-
-    @Inject
     LocationRepository locationRepository;
 
     @Inject
     LocationMapper locationMapper;
-
-    @Inject
-    TrackerMapper trackerMapper;
 
     @Override
     public Optional<LocationDto> findById(Long id) {
@@ -55,16 +47,10 @@ public class LocationFacade implements BaseFacade<LocationDto, Long> {
     }
 
     public void saveFromMessaging(TripMessage tripMessage) {
+        System.out.println("saving  " + tripMessage);
         //region Trip
         long tripID = tripMessage.getTripID();
         Trip trip = tripFacade.findByIdTrip(tripID).get();
-        if(trip == null) {
-            trip = new Trip();
-            trip.setId(tripID);
-            TrackerDto trackerDto = trackerFacade.findbyUuid(tripMessage.getTrackerID()).get();
-            trip.setTracker(trackerMapper.trackerDtoToTracker(trackerDto));
-            tripFacade.saveTrip(trip);
-        }
         //endregion
 
         //region location

@@ -7,6 +7,7 @@ import lux.fontys.tracking.facade.TripFacade;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import java.util.UUID;
 
 @Path("/trips")
 @Produces("application/json")
@@ -43,10 +44,10 @@ public class TripsController {
     }
 
     @GET
-    @Path("/newid")
-    public Response newID() {
+    @Path("/newid/{uuid}")
+    public Response newID(@PathParam("uuid") UUID uuid) {
         try {
-            return Response.ok(tripFacade.getNewID()).build();
+            return Response.ok(tripFacade.getNewID(uuid)).build();
         }
         catch (Exception e) {
             System.out.println(e.getMessage());

@@ -33,8 +33,8 @@ public class TripRepository extends CrudRepository<Trip, Long> {
 
     public long getNewID() {
         try {
-            Query q = entityManager.createNativeQuery("select nextval('hibernate_sequence')");
-            return ((BigInteger)q.getSingleResult()).longValue();
+            Query q = entityManager.createQuery("select max(t.id) from Trip t");
+            return (long)q.getSingleResult();
         }
         catch (Exception e) {
             throw e;

@@ -50,4 +50,15 @@ public class TripMessage {
     public void setTrackedAt(Date trackedAt) {
         this.trackedAt = trackedAt;
     }
+
+    @Override
+    public String toString() {
+        return "TripMessage{" +
+                "trackerID=" + trackerID +
+                ", tripID=" + tripID +
+                ", longitude=" + longitude +
+                ", latitude=" + latitude +
+                ", trackedAt=" + trackedAt +
+                '}';
+    }
 }

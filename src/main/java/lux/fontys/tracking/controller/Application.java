@@ -14,7 +14,6 @@ public class Application extends javax.ws.rs.core.Application {
 
     @PostConstruct
     private void onInit(){
-        listener = new Listener();
         listener.MyListener();
     }
 }
