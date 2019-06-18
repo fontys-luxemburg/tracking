@@ -31,6 +31,7 @@ public abstract class CrudRepository<T extends BaseEntity, ID> {
             entityManager.getTransaction().begin();
             if (entity.isNew()) {
                 entityManager.persist(entity);
+                entityManager.flush();
             } else {
                 entityManager.merge(entity);
             }
