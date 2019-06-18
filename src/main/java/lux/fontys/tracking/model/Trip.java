@@ -2,10 +2,7 @@ package lux.fontys.tracking.model;
 
 import lux.fontys.tracking.DistanceCalculator;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,8 +23,10 @@ public class Trip extends BaseEntity {
 
     private double totalPrice;
 
+    @Transient
     private DistanceCalculator calculator = new DistanceCalculator();
 
+    @Transient
     private List<Location> locations = new ArrayList<>();
 
     public Tracker getTracker() {
