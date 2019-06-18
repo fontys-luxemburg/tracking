@@ -33,8 +33,8 @@ public class TripsController {
         return Response.ok(tripFacade.findById(id)).build();
     }
 
-    @POST
-    @Path("{id}")
+    @GET
+    @Path("finishTrip/{id}")
     public Response endTrip(@PathParam("id") Long id) {
         Trip trip = tripFacade.findByIdTrip(id).get();
         if(trip != null)
@@ -44,7 +44,7 @@ public class TripsController {
                 return Response.ok().build();
             }
             catch (Exception e) {
-                return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+                return Response.ok(e.getMessage()).build();
             }
         }
         else {
