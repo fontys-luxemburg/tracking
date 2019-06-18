@@ -25,10 +25,11 @@ public class TrackerRepository extends CrudRepository<Tracker, Long> {
 
 
     public Optional<Tracker> findByUuid(UUID uuid) {
-        Query query = entityManager.createQuery("select t.id, t.trackerId, t.vehicleID, t.startDate, t.destroyedDate, t.createdAt, t.updatedAt from Tracker t where t.trackerId = :tracker_Id", Tracker.class);
+        Query query = entityManager.createQuery("select t from Tracker t where t.trackerId = :tracker_Id");
         query.setParameter("tracker_Id", uuid);
+        query.setMaxResults(1);
         try{
-            Tracker tracker = (Tracker) query.getSingleResult();
+            Tracker tracker = (Tracker) query.getResultList().get(0);
             return Optional.of(tracker);
         } catch (Exception e){
             return Optional.of(null);

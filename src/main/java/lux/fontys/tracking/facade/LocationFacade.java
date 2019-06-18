@@ -54,7 +54,11 @@ public class LocationFacade implements BaseFacade<LocationDto, Long> {
         //endregion
 
         //region location
-        Location location = new Location(trip, tripMessage.getLatitude(), tripMessage.getLongitude(), tripMessage.getTrackedAt());
+        Location location = new Location();
+        location.setLatitude(tripMessage.getLatitude());
+        location.setLongitude(tripMessage.getLongitude());
+        location.setTrackedAt(tripMessage.getTrackedAt());
+        location.setTrip(trip);
         locationRepository.save(location);
         //endregion
     }

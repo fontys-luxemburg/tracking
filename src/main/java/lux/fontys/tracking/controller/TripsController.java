@@ -5,6 +5,7 @@ import lux.fontys.tracking.facade.LocationFacade;
 import lux.fontys.tracking.facade.TripFacade;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.util.UUID;
@@ -45,6 +46,7 @@ public class TripsController {
 
     @GET
     @Path("/newid/{uuid}")
+    @Transactional
     public Response newID(@PathParam("uuid") UUID uuid) {
         try {
             return Response.ok(tripFacade.getNewID(uuid)).build();

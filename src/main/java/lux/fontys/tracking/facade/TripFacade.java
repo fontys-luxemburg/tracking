@@ -69,12 +69,11 @@ public class TripFacade implements BaseFacade<TripDto, Long> {
         }
         return Optional.empty();
     }
-    public boolean tripsExists(Long id){
-        return tripRepository.tripExists(id);
-    }
+
     public long getNewID(UUID trackerID) {
         try {
             Trip trip = new Trip();
+            trip.setStartDate(new Date());
             TrackerDto trackerDto = trackerFacade.findbyUuid(trackerID).get();
             trip.setTracker(trackerMapper.trackerDtoToTracker(trackerDto));
             saveTrip(trip);

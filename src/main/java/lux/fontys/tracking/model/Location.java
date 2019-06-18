@@ -15,23 +15,13 @@ public class Location extends BaseEntity {
     @JoinColumn(name = "trip_id", nullable = false)
     private Trip trip;
 
-    @NotNull
     private double latitude;
 
-    @NotNull
     private double longitude;
 
-    @NotNull
     private Date trackedAt;
 
     public Location() {}
-
-    public Location(Trip trip, double latitude, double longitude, Date trackedAt) {
-        this.trip = trip;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.trackedAt = trackedAt;
-    }
 
     public Trip getTrip() {
         return trip;
