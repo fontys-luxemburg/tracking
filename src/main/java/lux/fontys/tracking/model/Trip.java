@@ -1,10 +1,14 @@
 package lux.fontys.tracking.model;
 
+import lux.fontys.tracking.DistanceCalculator;
+
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "trips")
@@ -19,6 +23,12 @@ public class Trip extends BaseEntity {
     private Date endDate;
 
     private double distanceTraveledKm;
+
+    private double totalPrice;
+
+    private DistanceCalculator calculator = new DistanceCalculator();
+
+    private List<Location> locations = new ArrayList<>();
 
     public Tracker getTracker() {
         return tracker;
@@ -52,4 +62,51 @@ public class Trip extends BaseEntity {
         this.distanceTraveledKm = distanceTraveledKm;
     }
 
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public List<Location> getLocations() {
+        return locations;
+    }
+
+    public void addLocation(Location location) {
+        location.setTrip(this);
+        locations.add(location);
+    }
+
+    public void calculateDistance() {
+
+        double totalDistance = 0;
+
+        for (int i = 0; i < locations.size() - 1; i++) {
+            Location first = locations.get(i);
+            Location second = locations.get(i + 1);
+
+            totalDistance += calculator.distanceBetween(first, second);
+        }
+
+        setDistanceTraveledKm(totalDistance);
+    }
+
+    public void calculatePrice(Rate rate) {
+        double price = 0.0;
+
+        for (int i = 0; i < locations.size() - 1; i++) {
+            Location first = locations.get(i);
+            Location second = locations.get(i + 1);
+
+            double distance = calculator.distanceBetween(first, second);
+            double multiplier = 1.0;
+
+            if (rate.getRushRates().size() > 0) {
+                RushRate rushRate = rate.getRushRateForDateTime(first.getTrackedAt());
+                multiplier = rushRate != null ? rushRate.getMultiplier() : 1.0;
+            }
+
+            price += (distance * rate.getCarRate()) * multiplier;
+        }
+
+        this.totalPrice = price;
+    }
 }
