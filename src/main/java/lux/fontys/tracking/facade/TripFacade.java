@@ -80,7 +80,7 @@ public class TripFacade implements BaseFacade<TripDto, Long> {
     public void calculatePriceForTrip(Trip trip) {
         Client client = ClientBuilder.newBuilder().build();
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        WebTarget webTarget = client.target("http://178.62.217.247:9060/government/api")
+        WebTarget webTarget = client.target("http://178.62.217.247:9060/government/api/rates")
                 .queryParam("date", formatter.format(trip.getStartDate()));
 
         Response response = webTarget.request().get();
