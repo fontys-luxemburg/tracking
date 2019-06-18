@@ -22,6 +22,8 @@ public class Tracker extends BaseEntity {
 
     private String vehicleID;
 
+    private Date startDate;
+
     public Tracker() {
     }
 
@@ -55,5 +57,13 @@ public class Tracker extends BaseEntity {
 
     public void setVehicleID(String vehicleID) {
         this.vehicleID = vehicleID;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 }

@@ -1,9 +1,6 @@
 package lux.fontys.tracking.model;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -11,18 +8,17 @@ import java.util.Date;
 @Table(name = "locations")
 public class Location extends BaseEntity {
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "trip_id", nullable = false)
     private Trip trip;
 
-    @NotNull
-    private Long latitude;
+    private double latitude;
 
-    @NotNull
-    private Long longitude;
+    private double longitude;
 
-    @NotNull
     private Date trackedAt;
+
+    public Location() {}
 
     public Trip getTrip() {
         return trip;
@@ -32,19 +28,19 @@ public class Location extends BaseEntity {
         this.trip = trip;
     }
 
-    public Long getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(Long latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public Long getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(Long longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 

@@ -5,6 +5,7 @@ import lux.fontys.tracking.model.Trip;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.Query;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
@@ -28,5 +29,21 @@ public class TripRepository extends CrudRepository<Trip, Long> {
         query.setParameter("beginDate", begin);
         query.setParameter("endDate", end);
         return query.getResultList();
+    }
+
+    public long getNewID() {
+        try {
+            Query q = entityManager.createQuery("select max(t.id) from Trip t");
+            return (long)q.getSingleResult();
+        }
+        catch (Exception e) {
+            throw e;
+        }
+    }
+    public boolean tripExists(Long id){
+        Query query = entityManager.createQuery("select t from Trip t where t.id = :id");
+        query.setParameter("id", id);
+        return query.getResultList().size()==1;
+
     }
 }

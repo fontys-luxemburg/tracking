@@ -43,6 +43,12 @@ public class TrackerFacade implements BaseFacade<TrackerDto, Long> {
 		return trackerDtos;
 	}
 
+	public Optional<List<TrackerDto>> findAvailableTracker() {
+		List<Tracker> tracker = trackerRepository.findAvailableTracker();
+		List<TrackerDto> trackerDto = trackerMapper.trackersToTrackerDtos(tracker);
+		return Optional.of(trackerDto);
+	}
+
     @Override
     @Transactional(Transactional.TxType.REQUIRED)
     public TrackerDto save(TrackerDto entity) {

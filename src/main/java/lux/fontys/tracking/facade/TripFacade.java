@@ -2,6 +2,7 @@ package lux.fontys.tracking.facade;
 
 import lux.fontys.tracking.dto.TrackerDto;
 import lux.fontys.tracking.dto.TripDto;
+import lux.fontys.tracking.mapper.TrackerMapper;
 import lux.fontys.tracking.mapper.TripMapper;
 import lux.fontys.tracking.model.Trip;
 import lux.fontys.tracking.repository.TripRepository;
@@ -11,6 +12,7 @@ import javax.inject.Inject;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @ApplicationScoped
 public class TripFacade implements BaseFacade<TripDto, Long> {
@@ -20,6 +22,12 @@ public class TripFacade implements BaseFacade<TripDto, Long> {
 
     @Inject
     TripMapper tripMapper;
+
+    @Inject
+    TrackerFacade trackerFacade;
+
+    @Inject
+    TrackerMapper trackerMapper;
 
     public List<TripDto> getAllFor(Long trackerId) {
         return tripMapper.tripsToTripDtos(tripRepository.findAllForTracker(trackerId));
@@ -52,5 +60,27 @@ public class TripFacade implements BaseFacade<TripDto, Long> {
             tracker.setTrips(trackerTrips);
         }
         return trackers;
+    }
+
+    Optional<Trip> findByIdTrip(Long id){
+        Optional<Trip> trip = tripRepository.findById(id);
+        if(trip.isPresent()) {
+            return trip;
+        }
+        return Optional.empty();
+    }
+
+    public long getNewID(UUID trackerID) {
+        try {
+            Trip trip = new Trip();
+            trip.setStartDate(new Date());
+            TrackerDto trackerDto = trackerFacade.findbyUuid(trackerID).get();
+            trip.setTracker(trackerMapper.trackerDtoToTracker(trackerDto));
+            saveTrip(trip);
+            return tripRepository.getNewID();
+        }
+        catch (Exception e) {
+            throw e;
+        }
     }
 }

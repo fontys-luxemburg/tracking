@@ -5,8 +5,10 @@ import lux.fontys.tracking.facade.LocationFacade;
 import lux.fontys.tracking.facade.TripFacade;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import java.util.UUID;
 
 @Path("/trips")
 @Produces("application/json")
@@ -40,5 +42,19 @@ public class TripsController {
     public Response create(TripDto trip) {
         tripFacade.save(trip);
         return Response.status(Response.Status.CREATED).build();
+    }
+
+    @GET
+    @Path("/newid/{uuid}")
+    @Transactional
+    public Response newID(@PathParam("uuid") UUID uuid) {
+        try {
+            return Response.ok(tripFacade.getNewID(uuid)).build();
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+
     }
 }

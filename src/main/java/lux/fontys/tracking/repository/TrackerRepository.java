@@ -25,13 +25,23 @@ public class TrackerRepository extends CrudRepository<Tracker, Long> {
 
 
     public Optional<Tracker> findByUuid(UUID uuid) {
-        Query query = entityManager.createQuery("select t from Tracker t where t.trackerId = :tracker_Id", Tracker.class);
+        Query query = entityManager.createQuery("select t from Tracker t where t.trackerId = :tracker_Id");
         query.setParameter("tracker_Id", uuid);
+        query.setMaxResults(1);
         try{
-            Tracker tracker = (Tracker) query.getSingleResult();
+            Tracker tracker = (Tracker) query.getResultList().get(0);
             return Optional.of(tracker);
         } catch (Exception e){
             return Optional.of(null);
+        }
+    }
+
+    public List<Tracker> findAvailableTracker() {
+        Query query = entityManager.createQuery("SELECT t FROM Tracker t WHERE t.id in (SELECT ti.tracker FROM Trip ti WHERE ti.id in (SELECT MAX(ti2.id) FROM Trip ti2 WHERE ti2.tracker = ti.tracker AND ti2.endDate IS NOT NULL)) AND t.destroyedDate IS null");
+        try{
+            return (List<Tracker>) query.getResultList();
+        } catch (Exception e){
+            return null;
         }
     }
 
@@ -48,7 +58,7 @@ public class TrackerRepository extends CrudRepository<Tracker, Long> {
 
     public List<Tracker> findByVehicleIDBetweenDates(String vehicleID, Date begin, Date end)
     {
-        Query query = entityManager.createQuery("select t from Tracker t where t.vehicleID = :vehicleID and t.createdAt between :beginDate and :endDate", Tracker.class);
+        Query query = entityManager.createQuery("select t from Tracker t where t.vehicleID = :vehicleID and t.startDate between :beginDate and :endDate", Tracker.class);
         query.setParameter("vehicleID", vehicleID);
         query.setParameter("beginDate", begin);
         query.setParameter("endDate", end);
@@ -60,7 +70,7 @@ public class TrackerRepository extends CrudRepository<Tracker, Long> {
     }
 
     public Tracker findLastTrackerByVehicle(String vehicleId) {
-        Query query = entityManager.createQuery("select t from Tracker t where t.id = (select max(t2.id) from Tracker t2 where t2.vehicleID = :vehicleId)");
+        Query query = entityManager.createQuery("select t.id, t.trackerId, t.vehicleID, t.startDate, t.destroyedDate, t.createdAt, t.updatedAt from Tracker t where t.id = (select max(t2.id) from Tracker t2 where t2.vehicleID = :vehicleId)");
         query.setParameter("vehicleId", vehicleId);
 
         try{

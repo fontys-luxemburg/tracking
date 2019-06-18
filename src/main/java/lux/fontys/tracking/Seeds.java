@@ -1,7 +1,9 @@
 package lux.fontys.tracking;
 
+import lux.fontys.tracking.facade.LocationFacade;
 import lux.fontys.tracking.facade.TrackerFacade;
 import lux.fontys.tracking.facade.TripFacade;
+import lux.fontys.tracking.model.Location;
 import lux.fontys.tracking.model.Tracker;
 import lux.fontys.tracking.model.Trip;
 
@@ -32,22 +34,28 @@ public class Seeds {
 
         cal = Calendar.getInstance();
 
+        Date today = new Date();
+
         //region Create trackers
-        Date trackerDestroyed = GetDate(CalendarEnum.Days,10, new Date());
+        Date trackerDestroyed = GetDate(CalendarEnum.Days,1,today);
         
         Tracker tracker1 = new Tracker();
         tracker1.setVehicleID("AB1234");
         tracker1.setTrackerId(UUID.randomUUID());
+        tracker1.setStartDate(today);
         tracker1.setDestroyedDate(trackerDestroyed);
 
         Tracker tracker2 = new Tracker();
         tracker2.setVehicleID("AB1234");
         tracker2.setTrackerId(UUID.randomUUID());
+        tracker2.setStartDate(trackerDestroyed);
+        trackerDestroyed = GetDate(CalendarEnum.Days, 2, trackerDestroyed);
         tracker2.setDestroyedDate(trackerDestroyed);
 
         Tracker tracker3 = new Tracker();
         tracker3.setVehicleID("AB1234");
         tracker3.setTrackerId(UUID.randomUUID());
+        tracker3.setStartDate(trackerDestroyed);
 
         trackerFacade.saveTracker(tracker1);
         trackerFacade.saveTracker(tracker2);
@@ -55,7 +63,7 @@ public class Seeds {
         //endregion
 
         //region Create Trips
-        Date newBeginDateTrips = GenerateTrips(3, tracker1, new Date());
+        Date newBeginDateTrips = GenerateTrips(3, tracker1, today);
         newBeginDateTrips = GetDate(CalendarEnum.Days, 1, newBeginDateTrips);
         newBeginDateTrips = GenerateTrips(2, tracker2, newBeginDateTrips);
         newBeginDateTrips = GetDate(CalendarEnum.Days, 2, newBeginDateTrips);
