@@ -8,7 +8,7 @@ import java.util.Date;
 @Table(name = "locations")
 public class Location extends BaseEntity {
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "trip_id", nullable = false)
     private Trip trip;
 

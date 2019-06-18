@@ -1,7 +1,9 @@
 package lux.fontys.tracking;
 
+import lux.fontys.tracking.facade.LocationFacade;
 import lux.fontys.tracking.facade.TrackerFacade;
 import lux.fontys.tracking.facade.TripFacade;
+import lux.fontys.tracking.model.Location;
 import lux.fontys.tracking.model.Tracker;
 import lux.fontys.tracking.model.Trip;
 
