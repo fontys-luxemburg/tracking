@@ -16,7 +16,7 @@ import java.nio.charset.StandardCharsets;
 public class Listener {
 
     private final String hostName = "84.24.202.19";
-    private final String queueName = "TrackingQueue3";
+    private final String queueName = "TrackingQueue2";
 
     @Inject
     LocationFacade locationFacade;
