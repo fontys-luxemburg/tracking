@@ -43,6 +43,17 @@ public class TrackerController {
     }
 
     @GET
+        @Path("available")
+    public Response getAvailableTracker(){
+        Optional<List<TrackerDto>> trackerDto = trackerFacade.findAvailableTracker();
+        if (trackerDto.isPresent()){
+            return Response.ok(trackerDto.get()).build();
+        }
+
+        return Response.status(Response.Status.NOT_FOUND).build();
+    }
+
+    @GET
     @Path("{id}/trips")
     public Response showTrips(@PathParam("id") Long id) {
         return Response.ok(tripFacade.getAllFor(id)).build();

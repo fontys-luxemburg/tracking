@@ -27,10 +27,19 @@ public abstract class CrudRepository<T extends BaseEntity, ID> {
     }
 
     public void save(T entity) {
-        if (entity.isNew()) {
-            entityManager.persist(entity);
-        } else {
-            entityManager.merge(entity);
+        try {
+            entityManager.getTransaction().begin();
+            if (entity.isNew()) {
+                entityManager.persist(entity);
+                entityManager.flush();
+            } else {
+                entityManager.merge(entity);
+            }
+        entityManager.getTransaction().commit();
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            entityManager.getTransaction().rollback();
         }
     }
 }
