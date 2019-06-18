@@ -64,12 +64,17 @@ public class TripFacade implements BaseFacade<TripDto, Long> {
     }
 
     public void finishTrip(Trip trip) {
-        trip.setEndDate(new Date());
-        trip.calculateDistance();
+        try {
+            trip.setEndDate(new Date());
+            trip.calculateDistance();
 
-        calculatePriceForTrip(trip);
+            calculatePriceForTrip(trip);
 
-        tripRepository.save(trip);
+            tripRepository.save(trip);
+        }
+        catch (Exception e) {
+            throw e;
+        }
     }
 
     public void calculatePriceForTrip(Trip trip) {
@@ -93,7 +98,7 @@ public class TripFacade implements BaseFacade<TripDto, Long> {
         return trackers;
     }
 
-    Optional<Trip> findByIdTrip(Long id){
+    public Optional<Trip> findByIdTrip(Long id){
         Optional<Trip> trip = tripRepository.findById(id);
         if(trip.isPresent()) {
             return trip;

@@ -8,14 +8,6 @@ import java.util.Date;
 @Table(name = "locations")
 public class Location extends BaseEntity {
 
-    public Location() {
-    }
-
-    public Location(@NotNull double latitude, @NotNull double longitude) {
-        this.latitude = latitude;
-        this.longitude = longitude;
-    }
-
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "trip_id", nullable = false)
     private Trip trip;
@@ -29,6 +21,11 @@ public class Location extends BaseEntity {
     private Date trackedAt;
 
     public Location() {}
+
+    public Location(@NotNull double latitude, @NotNull double longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
 
     public Trip getTrip() {
         return trip;

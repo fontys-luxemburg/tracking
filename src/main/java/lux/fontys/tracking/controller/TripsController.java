@@ -3,6 +3,7 @@ package lux.fontys.tracking.controller;
 import lux.fontys.tracking.dto.TripDto;
 import lux.fontys.tracking.facade.LocationFacade;
 import lux.fontys.tracking.facade.TripFacade;
+import lux.fontys.tracking.model.Trip;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -32,6 +33,25 @@ public class TripsController {
         return Response.ok(tripFacade.findById(id)).build();
     }
 
+    @POST
+    @Path("{id}")
+    public Response endTrip(@PathParam("id") Long id) {
+        Trip trip = tripFacade.findByIdTrip(id).get();
+        if(trip != null)
+        {
+            try {
+                tripFacade.finishTrip(trip);
+                return Response.ok().build();
+            }
+            catch (Exception e) {
+                return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+            }
+        }
+        else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+
     @GET
     @Path("{trip_id}/locations")
     public Response showLocations(@PathParam("trip_id") Long tripId) {
@@ -55,6 +75,5 @@ public class TripsController {
             System.out.println(e.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-
     }
 }
