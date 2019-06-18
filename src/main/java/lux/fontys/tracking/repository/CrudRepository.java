@@ -4,6 +4,7 @@ import lux.fontys.tracking.model.BaseEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,6 +27,7 @@ public abstract class CrudRepository<T extends BaseEntity, ID> {
         return Optional.of(entityManager.find(entityClass, id));
     }
 
+    @Transactional
     public void save(T entity) {
         try {
             entityManager.getTransaction().begin();

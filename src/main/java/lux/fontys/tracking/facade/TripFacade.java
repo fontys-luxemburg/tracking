@@ -1,14 +1,23 @@
 package lux.fontys.tracking.facade;
 
+import lux.fontys.tracking.DistanceCalculator;
 import lux.fontys.tracking.dto.TrackerDto;
 import lux.fontys.tracking.dto.TripDto;
 import lux.fontys.tracking.mapper.TrackerMapper;
 import lux.fontys.tracking.mapper.TripMapper;
+import lux.fontys.tracking.model.Location;
+import lux.fontys.tracking.model.Rate;
 import lux.fontys.tracking.model.Trip;
 import lux.fontys.tracking.repository.TripRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Response;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -54,6 +63,33 @@ public class TripFacade implements BaseFacade<TripDto, Long> {
         tripRepository.save(trip);
     }
 
+    public void finishTrip(Trip trip) {
+        try {
+            trip.setEndDate(new Date());
+            trip.calculateDistance();
+
+            calculatePriceForTrip(trip);
+
+            tripRepository.save(trip);
+        }
+        catch (Exception e) {
+            throw e;
+        }
+    }
+
+    public void calculatePriceForTrip(Trip trip) {
+        Client client = ClientBuilder.newBuilder().build();
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        WebTarget webTarget = client.target("http://178.62.217.247:9060/government/api")
+                .queryParam("date", formatter.format(trip.getStartDate()));
+
+        Response response = webTarget.request().get();
+
+        Rate rate = response.readEntity(Rate.class);
+
+        trip.calculatePrice(rate);
+    }
+
     public List<TrackerDto> GetTripBetweenDates(List<TrackerDto> trackers, Date begin, Date end) {
         for (TrackerDto tracker : trackers) {
             List<TripDto> trackerTrips = tripMapper.tripsToTripDtos(tripRepository.findAllForTrackerBetweendates(tracker.getId(), begin, end));
@@ -62,7 +98,7 @@ public class TripFacade implements BaseFacade<TripDto, Long> {
         return trackers;
     }
 
-    Optional<Trip> findByIdTrip(Long id){
+    public Optional<Trip> findByIdTrip(Long id){
         Optional<Trip> trip = tripRepository.findById(id);
         if(trip.isPresent()) {
             return trip;
