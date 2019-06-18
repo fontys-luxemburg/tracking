@@ -15,6 +15,9 @@ public class Trip extends BaseEntity {
     @JoinColumn(name = "trackerId", nullable = false)
     private Tracker tracker;
 
+    @OneToMany(mappedBy = "trip", fetch = FetchType.EAGER)
+    private List<Location> locations = new ArrayList<>();
+
     private Date startDate;
 
     private Date endDate;
@@ -25,9 +28,6 @@ public class Trip extends BaseEntity {
 
     @Transient
     private DistanceCalculator calculator = new DistanceCalculator();
-
-    @Transient
-    private List<Location> locations = new ArrayList<>();
 
     public Tracker getTracker() {
         return tracker;
@@ -67,6 +67,10 @@ public class Trip extends BaseEntity {
 
     public List<Location> getLocations() {
         return locations;
+    }
+
+    public void setLocations(List<Location> locations) {
+        this.locations = locations;
     }
 
     public void addLocation(Location location) {
