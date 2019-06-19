@@ -91,8 +91,10 @@ public class Trip extends BaseEntity {
 
         setDistanceTraveledKm(totalDistance);
     }
-
-    public void calculatePrice(Rate rate) {
+    public void setTotalPrice(double price){
+        totalPrice=price;
+    }
+    public double calculatePrice(Rate rate) {
         double price = 0.0;
 
         for (int i = 0; i < locations.size() - 1; i++) {
@@ -111,5 +113,6 @@ public class Trip extends BaseEntity {
         }
 
         this.totalPrice = price;
+        return totalPrice;
     }
 }

@@ -72,7 +72,7 @@ public class TripFacade implements BaseFacade<TripDto, Long> {
             trip.setEndDate(new Date());
             trip.calculateDistance();
 
-            calculatePriceForTrip(trip);
+            trip.setTotalPrice(calculatePriceForTrip(trip));
 
             tripRepository.save(trip);
         }
@@ -81,7 +81,7 @@ public class TripFacade implements BaseFacade<TripDto, Long> {
         }
     }
 
-    public void calculatePriceForTrip(Trip trip) {
+    public Double calculatePriceForTrip(Trip trip) {
         Client client = ClientBuilder.newBuilder().build();
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         WebTarget webTarget = client.target("http://178.62.217.247:9060/government/api/rates")
@@ -92,8 +92,9 @@ public class TripFacade implements BaseFacade<TripDto, Long> {
             //Rate r = new Gson().fromJson(response.getEntity().toString(),Rate.class);
             System.err.println(response.getEntity().toString());
             Rate rate = response.readEntity(Rate.class);
-            trip.calculatePrice(rate);
+           return trip.calculatePrice(rate);
         }
+        return 0.0;
     }
 
     public List<TrackerDto> GetTripBetweenDates(List<TrackerDto> trackers, Date begin, Date end) {
