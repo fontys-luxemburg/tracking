@@ -55,7 +55,7 @@ public class TrackerRepository extends CrudRepository<Tracker, Long> {
 
     public List<Tracker> findByVehicleIDBetweenDates(String vehicleID, Date begin, Date end)
     {
-        Query query = entityManager.createQuery("select t from Tracker t where t.vehicleID = :vehicleID and t.startDate between :beginDate and :endDate", Tracker.class);
+        Query query = entityManager.createQuery("select t from Tracker t where t.vehicleID = :vehicleID and t.startDate between :beginDate and :endDate or t.startDate < :beginDate and t.destroyedDate = null", Tracker.class);
         query.setParameter("vehicleID", vehicleID);
         query.setParameter("beginDate", begin, TemporalType.DATE);
         query.setParameter("endDate", end,TemporalType.DATE);
