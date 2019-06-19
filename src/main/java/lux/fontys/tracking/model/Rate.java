@@ -1,21 +1,28 @@
 package lux.fontys.tracking.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class Rate extends BaseEntity {
+public class Rate implements Serializable {
 
+    private Long id;
     private double carRate;
     private double truckRate;
     private double busRate;
-
     private List<RushRate> rushRates = new ArrayList<>();
 
     public Rate() {
+    }
+
+    public void setId(Long id){
+        this.id=id;
+    }
+
+    public Long getId(){
+        return id;
     }
 
     public double getCarRate() {
@@ -47,7 +54,7 @@ public class Rate extends BaseEntity {
     }
 
     public void addRushRate(RushRate rushRate) {
-        rushRate.setRate(this);
+        rushRate.setRateID(this.getId());
         rushRates.add(rushRate);
     }
 

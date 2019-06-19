@@ -1,5 +1,6 @@
 package lux.fontys.tracking.facade;
 
+import com.google.gson.Gson;
 import lux.fontys.tracking.DistanceCalculator;
 import lux.fontys.tracking.dto.TrackerDto;
 import lux.fontys.tracking.dto.TripDto;
@@ -87,10 +88,12 @@ public class TripFacade implements BaseFacade<TripDto, Long> {
                 .queryParam("date", formatter.format(trip.getStartDate()));
 
         Response response = webTarget.request().get();
-
-        Rate rate = response.readEntity(Rate.class);
-
-        trip.calculatePrice(rate);
+        if(response.getStatus() == 200) {
+            //Rate r = new Gson().fromJson(response.getEntity().toString(),Rate.class);
+            System.err.println(response.getEntity().toString());
+            Rate rate = response.readEntity(Rate.class);
+            trip.calculatePrice(rate);
+        }
     }
 
     public List<TrackerDto> GetTripBetweenDates(List<TrackerDto> trackers, Date begin, Date end) {

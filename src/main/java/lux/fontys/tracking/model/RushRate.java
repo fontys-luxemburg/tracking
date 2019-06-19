@@ -1,14 +1,14 @@
 package lux.fontys.tracking.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
-public class RushRate {
+public class RushRate implements Serializable {
 
-    private Rate rate;
+    private Long rateID;
     private int dayOfWeek;
-
     private String startTime;
     private String endTime;
 
@@ -24,12 +24,12 @@ public class RushRate {
         this.multiplier = multiplier;
     }
 
-    public Rate getRate() {
-        return rate;
+    public Long getRateID() {
+        return rateID;
     }
 
-    public void setRate(Rate rate) {
-        this.rate = rate;
+    public void setRateID(Long rateID) {
+        this.rateID = rateID;
     }
 
     public int getDayOfWeek() {
