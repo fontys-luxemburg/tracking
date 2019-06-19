@@ -78,7 +78,7 @@ public class TripsController {
         }
     }
     @GET
-    @Path("{trackerid}")
+    @Path("tracker/{trackerid}")
     @Transactional
     public Response getByTracking(@PathParam("trackerid") UUID trackerId){
         List<TripDto> trips = tripFacade.getAllFor(trackerId);
