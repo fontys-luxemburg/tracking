@@ -63,7 +63,7 @@ public class RateCalculationTest {
         rate.setCarRate(2.0);
 
         RushRate rushRate = new RushRate(2, "12:00", "13:00", 1.5);
-        rushRate.setRate(rate);
+        rushRate.setRateID(rate.getId());
 
         rate.addRushRate(rushRate);
 

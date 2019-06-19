@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import java.util.Optional;
 import java.util.UUID;
 
 @Path("/trips")
@@ -34,17 +35,18 @@ public class TripsController {
     }
 
     @GET
-    @Path("finishTrip/{id}")
+    @Path("finish/{id}")
     public Response endTrip(@PathParam("id") Long id) {
-        Trip trip = tripFacade.findByIdTrip(id).get();
-        if(trip != null)
+        Optional<Trip> trip = tripFacade.findByIdTrip(id);
+        if(trip.isPresent())
         {
             try {
-                tripFacade.finishTrip(trip);
+                tripFacade.finishTrip(trip.get());
                 return Response.ok().build();
             }
             catch (Exception e) {
-                return Response.ok(e.getMessage()).build();
+                System.out.println(e.getMessage());
+                return Response.status(Response.Status.NOT_FOUND).build();
             }
         }
         else {
