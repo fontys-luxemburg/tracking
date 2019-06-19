@@ -95,6 +95,7 @@ public class TripsController {
     }
     @GET
     @Path("tracker/{trackerid}/date")
+    @Consumes("text/html")
     @Transactional
     public Response getByTracking(@PathParam("trackerid") UUID trackerId,@QueryParam("startDate") Long startDate,@QueryParam("endDate") Long endDate){
         return Response.ok(tripFacade.getAllTripsTrackerTrip((trackerFacade.findbyUuid(trackerId).get()),new Date(startDate),new Date(endDate))).build();
