@@ -11,6 +11,7 @@ public class TripDto extends BaseDto {
 
     private double distanceTraveledKm;
 
+    private String registrationID;
     public Long getTrackerId() {
         return trackerId;
     }
@@ -41,5 +42,13 @@ public class TripDto extends BaseDto {
 
     public void setDistanceTraveledKm(double distanceTraveledKm) {
         this.distanceTraveledKm = distanceTraveledKm;
+    }
+
+    public String getRegistrationID() {
+        return registrationID;
+    }
+
+    public void setRegistrationID(String registrationID) {
+        this.registrationID = registrationID;
     }
 }

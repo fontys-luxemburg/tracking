@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import java.util.List;
 import java.util.UUID;
 
 @Path("/trips")
@@ -75,5 +76,12 @@ public class TripsController {
             System.out.println(e.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
+    }
+    @GET
+    @Path("{trackerid}")
+    @Transactional
+    public Response getByTracking(@PathParam("trackerid") UUID trackerId){
+        List<TripDto> trips = tripFacade.getAllFor(trackerId);
+        return Response.ok(trips).build();
     }
 }

@@ -8,6 +8,7 @@ import javax.persistence.Query;
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @ApplicationScoped
 public class TripRepository extends CrudRepository<Trip, Long> {
@@ -19,6 +20,11 @@ public class TripRepository extends CrudRepository<Trip, Long> {
 
     public List<Trip> findAllForTracker(Long trackerId) {
         Query query = entityManager.createQuery("select t from Trip t where t.tracker.id = :tracker_id");
+        query.setParameter("tracker_id", trackerId);
+        return query.getResultList();
+    }
+    public List<Trip> findAllForTracker(UUID trackerId) {
+        Query query = entityManager.createQuery("select t from Trip t where t.tracker.trackerId = :tracker_id");
         query.setParameter("tracker_id", trackerId);
         return query.getResultList();
     }

@@ -41,6 +41,9 @@ public class TripFacade implements BaseFacade<TripDto, Long> {
     public List<TripDto> getAllFor(Long trackerId) {
         return tripMapper.tripsToTripDtos(tripRepository.findAllForTracker(trackerId));
     }
+    public List<TripDto> getAllFor(UUID trackerId) {
+        return tripMapper.tripsToTripDtos(tripRepository.findAllForTracker(trackerId));
+    }
 
     @Override
     public Optional<TripDto> findById(Long id) {
