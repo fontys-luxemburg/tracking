@@ -5,10 +5,7 @@ import lux.fontys.tracking.model.Tracker;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.*;
 import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
@@ -60,8 +57,8 @@ public class TrackerRepository extends CrudRepository<Tracker, Long> {
     {
         Query query = entityManager.createQuery("select t from Tracker t where t.vehicleID = :vehicleID and t.startDate between :beginDate and :endDate", Tracker.class);
         query.setParameter("vehicleID", vehicleID);
-        query.setParameter("beginDate", begin);
-        query.setParameter("endDate", end);
+        query.setParameter("beginDate", begin, TemporalType.DATE);
+        query.setParameter("endDate", end,TemporalType.DATE);
         try{
             return (List<Tracker>) query.getResultList();
         } catch (Exception e){

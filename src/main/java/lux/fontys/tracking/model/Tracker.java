@@ -21,7 +21,7 @@ public class Tracker extends BaseEntity {
     private List<Trip> trips = new ArrayList<>();
 
     private String vehicleID;
-
+    @Temporal(TemporalType.DATE)
     private Date startDate;
 
     public Tracker() {
