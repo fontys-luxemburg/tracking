@@ -1,8 +1,11 @@
 package lux.fontys.tracking.controller;
 
+import lux.fontys.tracking.dto.TrackerDto;
 import lux.fontys.tracking.dto.TripDto;
 import lux.fontys.tracking.facade.LocationFacade;
+import lux.fontys.tracking.facade.TrackerFacade;
 import lux.fontys.tracking.facade.TripFacade;
+import lux.fontys.tracking.model.Tracker;
 import lux.fontys.tracking.model.Trip;
 
 import javax.inject.Inject;
@@ -10,6 +13,9 @@ import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.util.Optional;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Path("/trips")
@@ -22,6 +28,8 @@ public class TripsController {
 
     @Inject
     LocationFacade locationFacade;
+    @Inject
+    TrackerFacade trackerFacade;
 
     @GET
     public Response index() {
@@ -77,5 +85,18 @@ public class TripsController {
             System.out.println(e.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
+    }
+    @GET
+    @Path("tracker/{trackerid}")
+    @Transactional
+    public Response getByTracking(@PathParam("trackerid") UUID trackerId){
+        List<TripDto> trips = tripFacade.getAllFor(trackerId);
+        return Response.ok(trips).build();
+    }
+    @GET
+    @Path("tracker/{trackerid}/date")
+    @Transactional
+    public Response getByTracking(@PathParam("trackerid") UUID trackerId,@QueryParam("startDate") Long startDate,@QueryParam("endDate") Long endDate){
+        return Response.ok(tripFacade.getAllTripsTrackerTrip((trackerFacade.findbyUuid(trackerId).get()),new Date(startDate),new Date(endDate))).build();
     }
 }
