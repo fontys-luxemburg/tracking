@@ -100,6 +100,10 @@ public class TripFacade implements BaseFacade<TripDto, Long> {
         }
         return trackers;
     }
+    public List<TripDto> getAllTripsTrackerTrip(TrackerDto trackerDto,Date begin,Date end){
+        List<TripDto> trackerTrips = tripMapper.tripsToTripDtos(tripRepository.findAllTripsForTrackerFromDate(trackerDto.getTrackerId(), begin,end));
+        return trackerTrips;
+    }
 
     public Optional<Trip> findByIdTrip(Long id){
         Optional<Trip> trip = tripRepository.findById(id);
